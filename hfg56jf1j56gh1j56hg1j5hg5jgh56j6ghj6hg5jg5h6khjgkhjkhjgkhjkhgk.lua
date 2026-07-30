@@ -496,6 +496,35 @@ G2L["31"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
 G2L["32"] = Instance.new("LocalScript", G2L["30"]);
 G2L["32"]["Name"] = [[ToggleUI]];
 
+-- إصلاح زر التصغير/التكبير (ToggleButton) ليعمل بكفاءة داخل CoreGui أو PlayerGui
+local function C_32()
+	local script = G2L["32"];
+	local toggleButton = script.Parent
+	local mainFrame = toggleButton:FindFirstAncestorOfClass("Frame") or toggleButton.Parent.Parent
+	local arrowImage = toggleButton:FindFirstChildOfClass("ImageLabel")
+	
+	local screenGui = toggleButton:FindFirstAncestorOfClass("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
+	local isOpen = true
+
+	toggleButton.Activated:Connect(function()
+		if clickSound then clickSound:Play() end
+		isOpen = not isOpen
+		
+		for _, child in ipairs(mainFrame:GetChildren()) do
+			if child:IsA("Frame") and child.Name ~= [[]] then
+				child.Visible = isOpen
+			end
+		end
+		
+		if arrowImage then
+			arrowImage.Rotation = isOpen and 90 or 270
+		end
+	end)
+end;
+task.spawn(C_32);
+
 local function C_b()
 	local script = G2L["b"];
 	local button = script.Parent
@@ -983,7 +1012,7 @@ local function C_24()
 		end
 	end)
 
-	safeConnect(RunService.Heartbeat, function()
+	RunService.Heartbeat:Connect(function()
 		if isEspEnabled then
 			updateESP()
 		end
@@ -999,11 +1028,9 @@ local function C_2a()
 	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
 
-	local Players = game:GetService("Players")
 	local player = Players.LocalPlayer
-
 	local isAntiFallEnabled = false
-	local antiFallConn
+	local fallConn
 
 	toggleFeature.Visible = false
 
@@ -1011,16 +1038,19 @@ local function C_2a()
 		isAntiFallEnabled = true
 		toggleFeature.Visible = true
 
-		if antiFallConn then antiFallConn:Disconnect() end
-
-		antiFallConn = RunService.Heartbeat:Connect(function()
-			if not isAntiFallEnabled then return end
-			local character = player.Character
-			if character then
-				local hrp = character:FindFirstChild("HumanoidRootPart")
-				if hrp and hrp.Position.Y < -500 then
-					hrp.CFrame = CFrame.new(hrp.Position.X, 50, hrp.Position.Z)
-					hrp.AssemblyLinearVelocity = Vector3.zero
+		if fallConn then fallConn:Disconnect() end
+		fallConn = RunService.Heartbeat:Connect(function()
+			local char = player.Character
+			if char then
+				local hum = char:FindFirstChildOfClass("Humanoid")
+				if hum then
+					-- إبطال مفعول السقوط الحاد أو إعادة تعيين الحالة لتفادي ضرر السقوط
+					if hum:GetState() == Enum.HumanoidStateType.FallingDown or hum:GetState() == Enum.HumanoidStateType.Freefall then
+						local hrp = char:FindFirstChild("HumanoidRootPart")
+						if hrp and hrp.AssemblyLinearVelocity.Y < -50 then
+							hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, -10, hrp.AssemblyLinearVelocity.Z)
+						end
+					end
 				end
 			end
 		end)
@@ -1029,18 +1059,16 @@ local function C_2a()
 	local function stopAntiFall()
 		isAntiFallEnabled = false
 		toggleFeature.Visible = false
-		if antiFallConn then
-			antiFallConn:Disconnect()
-			antiFallConn = nil
+		if fallConn then
+			fallConn:Disconnect()
+			fallConn = nil
 		end
 	end
 
 	button.Activated:Connect(function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isAntiFallEnabled then
+		if clickSound then clickSound:Play() end
+		isAntiFallEnabled = not isAntiFallEnabled
+		if isAntiFallEnabled then
 			startAntiFall()
 		else
 			stopAntiFall()
@@ -1049,22 +1077,18 @@ local function C_2a()
 end;
 task.spawn(C_2a);
 
+-- تفعيل السحب (Dragging) للقائمة ليتم تحريكها بسلاسة من شريط العنوان
 local function C_2c()
 	local script = G2L["2c"];
-	local UserInputService = game:GetService("UserInputService")
 	local gui = script.Parent
-
-	local dragging
-	local dragInput
-	local dragStart
-	local startPos
+	local dragging, dragInput, dragStart, startPos
 
 	local function update(input)
 		local delta = input.Position - dragStart
 		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 	end
 
-	safeConnect(gui.InputBegan, function(input)
+	gui.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
@@ -1078,38 +1102,17 @@ local function C_2c()
 		end
 	end)
 
-	safeConnect(gui.InputChanged, function(input)
+	gui.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
 	end)
 
-	safeConnect(UserInputService.InputChanged, function(input)
+	UserInputService = game:GetService("UserInputService")
+	UserInputService.InputChanged:Connect(function(input)
 		if input == dragInput and dragging then
 			update(input)
 		end
 	end)
 end;
 task.spawn(C_2c);
-
-local function C_32()
-	local script = G2L["32"];
-	local button = script.Parent
-	local mainFrame = button:FindFirstAncestorOfClass("ScreenGui"):FindFirstChild("Main")
-
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-
-	local isOpen = true
-
-	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-		if mainFrame then
-			isOpen = not isOpen
-			mainFrame.Visible = isOpen
-		end
-	end)
-end;
-task.spawn(C_32);

@@ -96,6 +96,7 @@ G2L["1"] = Instance.new("ScreenGui", protectGui);
 G2L["1"]["Name"] = [[KoyaScript]];
 G2L["1"]["ResetOnSpawn"] = false;
 G2L["1"]["DisplayOrder"] = 999;
+G2L["1"]["IgnoreGuiInset"] = true;
 
 local clickSound = Instance.new("Sound", G2L["1"])
 clickSound.Name = "UIClickSound"
@@ -1143,7 +1144,21 @@ local function C_32()
 	safeConnect(button.Activated, function()
 		if clickSound then clickSound:Play() end
 		isOpen = not isOpen
-		mainFrame.Visible = isOpen
+		
+		-- تعديل الحجم والشفافية لإخفاء وإظهار الإطار بسلاسة داخل CoreGui
+		if isOpen then
+			mainFrame.Size = UDim2.new(0, 230, 0, 260)
+			for _, child in ipairs(mainFrame:GetChildren()) do
+				if child ~= mainFrame:FindFirstChild("UIListLayout") and child.Name ~= "Frame" and child.Name ~= "UICorner" and child.Name ~= "TextLabel" and child.Name ~= "UIStroke" and child.Name ~= "UIShadow" then
+					child.Visible = true
+				end
+			end
+			G2L["3"].Visible = true
+		else
+			G2L["3"].Visible = false
+			mainFrame.Size = UDim2.new(0, 230, 0, 40)
+		end
+		
 		arrowImage.Rotation = isOpen and 90 or 270
 	end)
 end;

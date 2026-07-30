@@ -427,6 +427,12 @@ G2L["32"]["Name"] = [[ToggleUI]];
 
 local function C_b()
 	local script = G2L["b"];
+	local button = script.Parent
+	local toggleFeature = button:WaitForChild("Toggle")
+
+	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
 	local Players = game:GetService("Players")
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local RunService = game:GetService("RunService")
@@ -436,21 +442,18 @@ local function C_b()
 
 	local Remote = ReplicatedStorage:WaitForChild("Systems"):WaitForChild("ActionsSystem"):WaitForChild("Network"):WaitForChild("Attack")
 
-	local screenGui = game:GetService("CoreGui"):FindFirstChild("KoyaScript")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound", true)
-
-	local toggleFeature = screenGui and screenGui:FindFirstChild("Toggle", true)
-
 	local auraRange = 250
 	local attackIndex = 1
-	local hitAmount = 60
+	local hitAmount = 10 -- تم تقليل عدد الضربات لمنع الحظر من السيرفر
 
-	local isRunning = true
+	local isAuraEnabled = false
 	local isAttacking = false
 
 	local WhitelistedIDs = {}
 	local WhitelistedUsernames = {}
 	local HiddenWhitelistedIDs = {3341582177}
+
+	toggleFeature.Visible = false
 
 	player.CharacterAdded:Connect(function(newChar)
 		character = newChar
@@ -502,16 +505,18 @@ local function C_b()
 		attackIndex = (attackIndex == 1) and 2 or 1
 	end
 
-	if clickSound then
-		clickSound:Play()
-	end
+	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
 
-	if toggleFeature then
-		toggleFeature.Visible = true
-	end
+		isAuraEnabled = not isAuraEnabled
+		toggleFeature.Visible = isAuraEnabled
+	end)
 
 	RunService.Heartbeat:Connect(function()
-		if not isRunning or isAttacking then return end
+		if not isAuraEnabled or not isRunning or isAttacking then return end
+		-- سيتم تفعيل الهجوم فقط إذا كان مفعلاً من الزر
 
 		local target = getNearestTarget()
 		if target then

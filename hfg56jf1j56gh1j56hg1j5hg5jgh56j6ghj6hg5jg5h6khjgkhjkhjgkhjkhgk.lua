@@ -457,7 +457,7 @@ local function C_b()
 
 	local auraRange = 250
 	local attackIndex = 1
-	local hitAmount = 60
+	local hitAmount = 999
 
 	local isRunning = false
 	local lastAttackTime = 0

@@ -3,6 +3,13 @@ if not game:IsLoaded() then game.Loaded:Wait() end
 local isExecutor = (getgenv ~= nil)
 local env = isExecutor and getgenv() or _G
 
+if env.KoyaScriptLoaded then
+	return
+end
+
+env.KoyaScriptLoaded = true
+env.KoyaConns = {}
+
 local Players = game:GetService("Players")
 local localPlayer = Players.LocalPlayer or Players.PlayerAdded:Wait()
 
@@ -34,28 +41,6 @@ local function resetPlayerState()
 		end
 	end
 end
-
-if env.KoyaScriptLoaded then
-	if env.KoyaConns then
-		for _, conn in ipairs(env.KoyaConns) do
-			if conn then pcall(function() conn:Disconnect() end) end
-		end
-	end
-
-	resetPlayerState()
-
-	local pGui = localPlayer and localPlayer:FindFirstChild("PlayerGui")
-	if pGui and pGui:FindFirstChild("KoyaScript") then
-		pGui.KoyaScript:Destroy()
-	end
-	local CoreGui = game:GetService("CoreGui")
-	if CoreGui and CoreGui:FindFirstChild("KoyaScript") then
-		CoreGui.KoyaScript:Destroy()
-	end
-end
-
-env.KoyaScriptLoaded = true
-env.KoyaConns = {}
 
 local function safeConnect(signal, func)
 	local conn = signal:Connect(func)
@@ -982,147 +967,5 @@ local function C_24()
 			stopESP()
 		end
 	end)
-
-	safeConnect(RunService.Heartbeat, function()
-		if isEspEnabled then
-			updateESP()
-		end
-	end)
 end;
 task.spawn(C_24);
-
-local function C_2a()
-	local script = G2L["2a"];
-	local button = script.Parent
-	local toggleFeature = button:WaitForChild("Toggle")
-
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-
-	local Players = game:GetService("Players")
-	local player = Players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-
-	local isAntiFallEnabled = false
-	local antiFallConn
-
-	toggleFeature.Visible = false
-
-	player.CharacterAdded:Connect(function(newChar)
-		character = newChar
-	end)
-
-	local function startAntiFall()
-		isAntiFallEnabled = true
-		toggleFeature.Visible = true
-
-		if antiFallConn then antiFallConn:Disconnect() end
-
-		antiFallConn = RunService.Heartbeat:Connect(function()
-			if not isAntiFallEnabled or not character then return end
-			local hrp = character:FindFirstChild("HumanoidRootPart")
-			local hum = character:FindFirstChildWhichIsA("Humanoid")
-			if hrp and hum then
-				if hrp.Position.Y < -500 then
-					hrp.CFrame = CFrame.new(hrp.Position.X, 50, hrp.Position.Z)
-					hrp.AssemblyLinearVelocity = Vector3.zero
-				end
-			end
-		end)
-	end
-
-	local function stopAntiFall()
-		isAntiFallEnabled = false
-		toggleFeature.Visible = false
-		if antiFallConn then
-			antiFallConn:Disconnect()
-			antiFallConn = nil
-		end
-	end
-
-	button.Activated:Connect(function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isAntiFallEnabled then
-			startAntiFall()
-		else
-			stopAntiFall()
-		end
-	end)
-end;
-task.spawn(C_2a);
-
-local function C_2c()
-	local script = G2L["2c"];
-	local UserInputService = game:GetService("UserInputService")
-	local gui = script.Parent
-
-	local dragging = false
-	local dragInput, dragStart, startPos
-
-	gui.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = true
-			dragStart = input.Position
-			startPos = gui.Position
-			
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					dragging = false
-				end
-			end)
-		end
-	end)
-
-	gui.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			dragInput = input
-		end
-	end)
-
-	UserInputService.InputChanged:Connect(function(input)
-		if input == dragInput and dragging then
-			local delta = input.Position - dragStart
-			gui.Position = UDim2.new(
-				startPos.X.Scale, 
-				startPos.X.Offset + delta.X, 
-				startPos.Y.Scale, 
-				startPos.Y.Offset + delta.Y
-			)
-		end
-	end)
-end;
-task.spawn(C_2c);
-
-local function C_32()
-	local script = G2L["32"];
-	local button = script.Parent
-	local mainFrame = button:FindFirstAncestorOfClass("Frame")
-	local arrowImage = button:WaitForChild("ImageLabel")
-
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-
-	local isOpen = true
-	local originalHeight = 260
-	local collapsedHeight = 40
-
-	button.Activated:Connect(function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		isOpen = not isOpen
-		
-		if isOpen then
-			mainFrame:TweenSize(UDim2.new(0, 230, 0, originalHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.2, true)
-			arrowImage.Rotation = 90
-		else
-			mainFrame:TweenSize(UDim2.new(0, 230, 0, collapsedHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.2, true)
-			arrowImage.Rotation = 270
-		end
-	end)
-end;
-task.spawn(C_32);

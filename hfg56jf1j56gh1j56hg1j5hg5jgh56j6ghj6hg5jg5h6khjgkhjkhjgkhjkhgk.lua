@@ -444,7 +444,7 @@ local function C_b()
 
 	local auraRange = 250
 	local attackIndex = 1
-	local hitAmount = 10 -- تم تقليل عدد الضربات لمنع الحظر من السيرفر
+	local hitAmount = 10
 
 	local isAuraEnabled = false
 	local isAttacking = false
@@ -515,8 +515,7 @@ local function C_b()
 	end)
 
 	RunService.Heartbeat:Connect(function()
-		if not isAuraEnabled or not isRunning or isAttacking then return end
-		-- سيتم تفعيل الهجوم فقط إذا كان مفعلاً من الزر
+		if not isAuraEnabled or isAttacking then return end
 
 		local target = getNearestTarget()
 		if target then

@@ -3,14 +3,48 @@ if not game:IsLoaded() then game.Loaded:Wait() end
 local isExecutor = (getgenv ~= nil)
 local env = isExecutor and getgenv() or _G
 
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer or Players.PlayerAdded:Wait()
+
+local defaultWalkSpeed = 16
+
+local function resetPlayerState()
+	if localPlayer and localPlayer.Character then
+		local char = localPlayer.Character
+		local hum = char:FindFirstChildWhichIsA("Humanoid")
+		local hrp = char:FindFirstChild("HumanoidRootPart")
+
+		if hum then
+			hum.WalkSpeed = defaultWalkSpeed
+			hum.PlatformStand = false
+		end
+
+		if hrp then
+			for _, child in ipairs(hrp:GetChildren()) do
+				if child:IsA("BodyVelocity") or child:IsA("BodyGyro") then
+					child:Destroy()
+				end
+			end
+		end
+	end
+
+	for _, v in ipairs(workspace:GetDescendants()) do
+		if v:IsA("Highlight") and v.Name == "VoxelESP" then
+			v:Destroy()
+		end
+	end
+end
+
 if env.KoyaScriptLoaded then
 	if env.KoyaConns then
 		for _, conn in ipairs(env.KoyaConns) do
 			if conn then pcall(function() conn:Disconnect() end) end
 		end
 	end
-	local Players = game:GetService("Players")
-	local pGui = Players.LocalPlayer and Players.LocalPlayer:FindFirstChild("PlayerGui")
+
+	resetPlayerState()
+
+	local pGui = localPlayer and localPlayer:FindFirstChild("PlayerGui")
 	if pGui and pGui:FindFirstChild("KoyaScript") then
 		pGui.KoyaScript:Destroy()
 	end
@@ -29,11 +63,9 @@ local function safeConnect(signal, func)
 	return conn
 end
 
-local Players = game:GetService("Players")
 local CoreGui = game:GetService("CoreGui")
 local RunService = game:GetService("RunService")
 local VirtualUser = game:GetService("VirtualUser")
-local localPlayer = Players.LocalPlayer or Players.PlayerAdded:Wait()
 
 local ALLOWED_GAME_ID = 10167792644
 
@@ -48,9 +80,7 @@ safeConnect(localPlayer.Idled, function()
 end)
 
 local UI_NAME = "KoyaScript"
-
 local playerGui = localPlayer and localPlayer:FindFirstChild("PlayerGui")
-
 local existingUI = (playerGui and playerGui:FindFirstChild(UI_NAME))
 	or (CoreGui and CoreGui:FindFirstChild(UI_NAME))
 
@@ -422,8 +452,6 @@ local function C_b()
 	local player = localPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
 
-	local Remote = ReplicatedStorage:WaitForChild("Systems"):WaitForChild("ActionsSystem"):WaitForChild("Network"):WaitForChild("Attack")
-
 	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
 
@@ -444,6 +472,16 @@ local function C_b()
 	safeConnect(player.CharacterAdded, function(newChar)
 		character = newChar
 	end)
+
+	local function getRemote()
+		local systems = ReplicatedStorage:FindFirstChild("Systems")
+		if not systems then return nil end
+		local actions = systems:FindFirstChild("ActionsSystem")
+		if not actions then return nil end
+		local net = actions:FindFirstChild("Network")
+		if not net then return nil end
+		return net:FindFirstChild("Attack")
+	end
 
 	local function valid(char)
 		return char
@@ -485,24 +523,23 @@ local function C_b()
 	end
 
 	local function hit(target)
-		pcall(function()
-			Remote:InvokeServer(target, attackIndex)
-		end)
-		attackIndex = (attackIndex == 1) and 2 or 1
+		local remote = getRemote()
+		if remote then
+			pcall(function()
+				remote:InvokeServer(target, attackIndex)
+			end)
+			attackIndex = (attackIndex == 1) and 2 or 1
+		end
 	end
 
 	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
+		if clickSound then clickSound:Play() end
 		isRunning = not isRunning
 		toggleFeature.Visible = isRunning
 	end)
 
 	safeConnect(RunService.Heartbeat, function()
 		if not isRunning then return end
-
 		local currentTime = tick()
 		if currentTime - lastAttackTime >= attackCooldown then
 			local target = getNearestTarget()
@@ -526,7 +563,6 @@ local function C_12()
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
 
 	local UserInputService = game:GetService("UserInputService")
-
 	local player = localPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
 
@@ -605,15 +641,8 @@ local function C_12()
 	end
 
 	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isFlying then
-			startFly()
-		else
-			stopFly()
-		end
+		if clickSound then clickSound:Play() end
+		if not isFlying then startFly() else stopFly() end
 	end)
 
 	safeConnect(UserInputService.InputBegan, function(input, gameProcessed)
@@ -648,7 +677,6 @@ local function C_18()
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
 
 	local UserInputService = game:GetService("UserInputService")
-
 	local player = localPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
 
@@ -688,15 +716,8 @@ local function C_18()
 	end
 
 	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isInfJumpEnabled then
-			startInfJump()
-		else
-			stopInfJump()
-		end
+		if clickSound then clickSound:Play() end
+		if not isInfJumpEnabled then startInfJump() else stopInfJump() end
 	end)
 
 	safeConnect(UserInputService.JumpRequest, function()
@@ -722,14 +743,25 @@ local function C_1e()
 	local character = player.Character or player.CharacterAdded:Wait()
 
 	local walkSpeed = 75
-	local originalWalkSpeed = nil
 	local isSpeedEnabled = false
 	local speedConn
+
+	local function updateOriginalSpeed(char)
+		if char then
+			local hum = char:WaitForChild("Humanoid", 5)
+			if hum and not isSpeedEnabled then
+				defaultWalkSpeed = hum.WalkSpeed
+			end
+		end
+	end
+
+	updateOriginalSpeed(character)
 
 	toggleFeature.Visible = false
 
 	safeConnect(player.CharacterAdded, function(newChar)
 		character = newChar
+		updateOriginalSpeed(newChar)
 		if isSpeedEnabled then
 			if speedConn then speedConn:Disconnect() end
 			local hum = character:WaitForChild("Humanoid")
@@ -747,10 +779,10 @@ local function C_1e()
 		local hum = character:FindFirstChildWhichIsA("Humanoid")
 		if not hum then return end
 
+		defaultWalkSpeed = hum.WalkSpeed
 		isSpeedEnabled = true
 		toggleFeature.Visible = true
 
-		originalWalkSpeed = hum.WalkSpeed
 		hum.WalkSpeed = walkSpeed
 
 		if speedConn then speedConn:Disconnect() end
@@ -773,22 +805,15 @@ local function C_1e()
 
 		if character then
 			local hum = character:FindFirstChildWhichIsA("Humanoid")
-			if hum and originalWalkSpeed then
-				hum.WalkSpeed = originalWalkSpeed
+			if hum then
+				hum.WalkSpeed = defaultWalkSpeed
 			end
 		end
 	end
 
 	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isSpeedEnabled then
-			startSpeed()
-		else
-			stopSpeed()
-		end
+		if clickSound then clickSound:Play() end
+		if not isSpeedEnabled then startSpeed() else stopSpeed() end
 	end)
 end;
 task.spawn(C_1e);
@@ -802,9 +827,8 @@ local function C_24()
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
 
 	local player = localPlayer
-
 	local isEspEnabled = false
-	local espHighlights = {}
+	local espLoopConn = nil
 
 	local HiddenWhitelistedIDs = {3341582177}
 
@@ -818,45 +842,48 @@ local function C_24()
 		return false
 	end
 
-	local function removeESP(char)
-		if espHighlights[char] then
-			espHighlights[char]:Destroy()
-			espHighlights[char] = nil
-		end
-	end
-
 	local function clearAllESP()
-		for char, _ in pairs(espHighlights) do
-			removeESP(char)
+		for _, v in ipairs(workspace:GetDescendants()) do
+			if v:IsA("Highlight") and v.Name == "VoxelESP" then
+				v:Destroy()
+			end
 		end
-		espHighlights = {}
 	end
 
 	local function applyESP(char)
 		if not char or not char:FindFirstChild("HumanoidRootPart") then return end
-		if espHighlights[char] then return end
-
-		local highlight = Instance.new("Highlight")
-		highlight.Name = "VoxelESP"
-		highlight.Adornee = char
-		highlight.FillColor = Color3.fromRGB(255, 0, 0)
-		highlight.OutlineColor = Color3.fromRGB(255, 80, 80)
-		highlight.FillTransparency = 0.65
-		highlight.OutlineTransparency = 0
-		highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-		highlight.Parent = char
-
-		espHighlights[char] = highlight
+		local existing = char:FindFirstChild("VoxelESP")
+		if not existing then
+			local highlight = Instance.new("Highlight")
+			highlight.Name = "VoxelESP"
+			highlight.Adornee = char
+			highlight.FillColor = Color3.fromRGB(255, 0, 0)
+			highlight.OutlineColor = Color3.fromRGB(255, 80, 80)
+			highlight.FillTransparency = 0.65
+			highlight.OutlineTransparency = 0
+			highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+			highlight.Parent = char
+		end
 	end
 
 	local function updateESP()
-		if not isEspEnabled then return end
+		local activeChars = {}
+
 		for _, p in ipairs(Players:GetPlayers()) do
 			if p ~= player and not isWhitelisted(p) then
-				if p.Character and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
-					applyESP(p.Character)
-				else
-					if p.Character then removeESP(p.Character) end
+				local char = p.Character
+				if char and char:FindFirstChild("Humanoid") and char.Humanoid.Health > 0 and char:FindFirstChild("HumanoidRootPart") then
+					activeChars[char] = true
+					applyESP(char)
+				end
+			end
+		end
+
+		for _, v in ipairs(workspace:GetDescendants()) do
+			if v:IsA("Highlight") and v.Name == "VoxelESP" then
+				local parentChar = v.Parent
+				if not parentChar or not activeChars[parentChar] then
+					v:Destroy()
 				end
 			end
 		end
@@ -865,40 +892,28 @@ local function C_24()
 	local function startESP()
 		isEspEnabled = true
 		toggleFeature.Visible = true
-		updateESP()
+
+		if espLoopConn then espLoopConn:Disconnect() end
+		espLoopConn = safeConnect(RunService.Heartbeat, function()
+			if isEspEnabled then
+				updateESP()
+			end
+		end)
 	end
 
 	local function stopESP()
 		isEspEnabled = false
 		toggleFeature.Visible = false
+		if espLoopConn then
+			espLoopConn:Disconnect()
+			espLoopConn = nil
+		end
 		clearAllESP()
 	end
 
 	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isEspEnabled then
-			startESP()
-		else
-			stopESP()
-		end
-	end)
-
-	safeConnect(Players.PlayerAdded, function(newPlayer)
-		safeConnect(newPlayer.CharacterAdded, function(char)
-			task.wait(0.5)
-			if isEspEnabled then
-				updateESP()
-			end
-		end)
-	end)
-
-	safeConnect(Players.PlayerRemoving, function(leavingPlayer)
-		if leavingPlayer.Character then
-			removeESP(leavingPlayer.Character)
-		end
+		if clickSound then clickSound:Play() end
+		if not isEspEnabled then startESP() else stopESP() end
 	end)
 end;
 task.spawn(C_24);
@@ -985,15 +1000,13 @@ local function C_2c()
 			isExpanded = true
 		end
 
-		local sizeTween = TweenService:Create(Main, tweenInfo, {Size = newSize})
-		sizeTween:Play()
+		local tweenSize = TweenService:Create(Main, tweenInfo, {Size = newSize})
+		tweenSize:Play()
 
 		if imageLabel then
-			local rotationTween = TweenService:Create(imageLabel, tweenInfo, {Rotation = newRotation})
-			rotationTween:Play()
+			local tweenRot = TweenService:Create(imageLabel, tweenInfo, {Rotation = newRotation})
+			tweenRot:Play()
 		end
 	end)
 end;
 task.spawn(C_2c);
-
-return G2L["1"], require;

@@ -440,14 +440,13 @@ local function C_b()
 	local player = Players.LocalPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
 
-	local Remote = ReplicatedStorage:WaitForChild("Systems"):WaitForChild("ActionsSystem"):WaitForChild("Network"):WaitForChild("Attack")
-
 	local auraRange = 250
 	local attackIndex = 1
 	local hitAmount = 10
 
 	local isAuraEnabled = false
 	local isAttacking = false
+	local Remote = nil      
 
 	local WhitelistedIDs = {}
 	local WhitelistedUsernames = {}
@@ -485,7 +484,7 @@ local function C_b()
 
 		for _, p in ipairs(Players:GetPlayers()) do
 			if p ~= player and not isWhitelisted(p) then
-				local targetChar = p.Character
+				let targetChar = p.Character
 				if valid(targetChar) then
 					local mag = (targetChar.HumanoidRootPart.Position - myPos).Magnitude
 					if mag < bestDist then
@@ -499,6 +498,7 @@ local function C_b()
 	end
 
 	local function hit(target)
+		if not Remote then return end
 		pcall(function()
 			Remote:InvokeServer(target, attackIndex)
 		end)
@@ -512,10 +512,21 @@ local function C_b()
 
 		isAuraEnabled = not isAuraEnabled
 		toggleFeature.Visible = isAuraEnabled
+
+		if isAuraEnabled and not Remote then
+			local systems = ReplicatedStorage:FindFirstChild("Systems")
+			local actionsSystem = systems and systems:FindFirstChild("ActionsSystem")
+			local network = actionsSystem and actionsSystem:FindFirstChild("Network")
+			Remote = network and network:FindFirstChild("Attack")
+
+			if not Remote then
+				warn("KillAura: لم يتم العثور على مسار الـ Remote المطلوب في اللعبة!")
+			end
+		end
 	end)
 
 	RunService.Heartbeat:Connect(function()
-		if not isAuraEnabled or isAttacking then return end
+		if not isAuraEnabled or isAttacking or not Remote then return end
 
 		local target = getNearestTarget()
 		if target then

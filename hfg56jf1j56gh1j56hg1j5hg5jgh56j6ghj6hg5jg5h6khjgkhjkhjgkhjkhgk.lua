@@ -983,23 +983,6 @@ local function C_24()
 		end
 	end)
 
-	Players.PlayerAdded:Connect(function(newPlayer)
-		newPlayer.CharacterAdded:Connect(function(char)
-			if isEspEnabled then
-				task.wait(1)
-				if newPlayer ~= player and not isWhitelisted(newPlayer) then
-					applyESP(char)
-				end
-			end
-		end)
-	end)
-
-	Players.PlayerRemoving:Connect(function(leavingPlayer)
-		if leavingPlayer.Character then
-			removeESP(leavingPlayer.Character)
-		end
-	end)
-
 	safeConnect(RunService.Heartbeat, function()
 		if isEspEnabled then
 			updateESP()
@@ -1018,66 +1001,45 @@ local function C_2a()
 
 	local Players = game:GetService("Players")
 	local player = Players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
 
 	local isAntiFallEnabled = false
-	local fallConn
+	local antiFallConn
 
 	toggleFeature.Visible = false
-
-	safeConnect(player.CharacterAdded, function(newChar)
-		character = newChar
-		if isAntiFallEnabled then
-			local hum = character:WaitForChild("Humanoid")
-			fallConn = safeConnect(hum.StateChanged, function(_, newState)
-				if newState == Enum.HumanoidStateType.Freefall then
-					task.delay(0.1, function()
-						if character and character:FindFirstChild("HumanoidRootPart") then
-							local hrp = character.HumanoidRootPart
-							if hrp.AssemblyLinearVelocity.Y < -50 then
-								hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, 0, hrp.AssemblyLinearVelocity.Z)
-							end
-						end
-					end)
-				end
-			end)
-		end
-	end)
 
 	local function startAntiFall()
 		isAntiFallEnabled = true
 		toggleFeature.Visible = true
-		if character then
-			local hum = character:FindFirstChildWhichIsA("Humanoid")
-			if hum then
-				if fallConn then pcall(function() fallConn:Disconnect() end) end
-				fallConn = safeConnect(hum.StateChanged, function(_, newState)
-					if newState == Enum.HumanoidStateType.Freefall then
-						task.delay(0.1, function()
-							if character and character:FindFirstChild("HumanoidRootPart") then
-								local hrp = character.HumanoidRootPart
-								if hrp.AssemblyLinearVelocity.Y < -50 then
-									hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, 0, hrp.AssemblyLinearVelocity.Z)
-								end
-							end
-						end)
-					end
-				end)
+
+		if antiFallConn then antiFallConn:Disconnect() end
+
+		antiFallConn = RunService.Heartbeat:Connect(function()
+			if not isAntiFallEnabled then return end
+			local character = player.Character
+			if character then
+				local hrp = character:FindFirstChild("HumanoidRootPart")
+				if hrp and hrp.Position.Y < -500 then
+					hrp.CFrame = CFrame.new(hrp.Position.X, 50, hrp.Position.Z)
+					hrp.AssemblyLinearVelocity = Vector3.zero
+				end
 			end
-		end
+		end)
 	end
 
 	local function stopAntiFall()
 		isAntiFallEnabled = false
 		toggleFeature.Visible = false
-		if fallConn then
-			pcall(function() fallConn:Disconnect() end)
-			fallConn = nil
+		if antiFallConn then
+			antiFallConn:Disconnect()
+			antiFallConn = nil
 		end
 	end
 
-	safeConnect(button.Activated, function()
-		if clickSound then clickSound:Play() end
+	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
+
 		if not isAntiFallEnabled then
 			startAntiFall()
 		else
@@ -1089,34 +1051,35 @@ task.spawn(C_2a);
 
 local function C_2c()
 	local script = G2L["2c"];
-	local frame = script.Parent
 	local UserInputService = game:GetService("UserInputService")
+	local gui = script.Parent
 
-	local dragging, dragInput, dragStart, startPos
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
 
 	local function update(input)
 		local delta = input.Position - dragStart
-		frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 	end
 
-	safeConnect(frame.InputBegan, function(input)
+	safeConnect(gui.InputBegan, function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
-			startPos = frame.Position
+			startPos = gui.Position
 
-			local conn
-			conn = safeConnect(input.Changed, function()
+			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
 					dragging = false
-					if conn then conn:Disconnect() end
 				end
 			end)
 		end
 	end)
 
-	safeConnect(frame.InputChanged, function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+	safeConnect(gui.InputChanged, function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
 	end)
@@ -1132,8 +1095,7 @@ task.spawn(C_2c);
 local function C_32()
 	local script = G2L["32"];
 	local button = script.Parent
-	local mainFrame = button:FindFirstAncestorOfClass("ScreenGui"):WaitForChild("Main")
-	local arrowImage = button:WaitForChild("ImageLabel")
+	local mainFrame = button:FindFirstAncestorOfClass("ScreenGui"):FindFirstChild("Main")
 
 	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
@@ -1141,10 +1103,13 @@ local function C_32()
 	local isOpen = true
 
 	safeConnect(button.Activated, function()
-		if clickSound then clickSound:Play() end
-		isOpen = not isOpen
-		mainFrame.Visible = isOpen
-		arrowImage.Rotation = isOpen and 90 or 180
+		if clickSound then
+			clickSound:Play()
+		end
+		if mainFrame then
+			isOpen = not isOpen
+			mainFrame.Visible = isOpen
+		end
 	end)
 end;
 task.spawn(C_32);

@@ -969,3 +969,72 @@ local function C_24()
 	end)
 end;
 task.spawn(C_24);
+
+local function C_2c()
+	local script = G2L["2c"];
+	local UserInputService = game:GetService("UserInputService")
+	local gui = script.Parent
+
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+
+	safeConnect(gui.InputBegan, function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+
+			safeConnect(input.Changed, function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	safeConnect(gui.InputChanged, function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	safeConnect(UserInputService.InputChanged, function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end;
+task.spawn(C_2c);
+
+local function C_32()
+	local script = G2L["32"];
+	local button = script.Parent
+	local mainFrame = button:FindFirstAncestorOfClass("Frame")
+	local container = mainFrame and mainFrame:FindFirstChild("Frame")
+	local arrow = button:FindFirstChild("ImageLabel")
+
+	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
+	local minimized = false
+
+	safeConnect(button.Activated, function()
+		if clickSound then clickSound:Play() end
+		minimized = not minimized
+		if container then
+			container.Visible = not minimized
+		end
+		if arrow then
+			arrow.Rotation = minimized and 0 or 90
+		end
+		mainFrame.Size = minimized and UDim2.new(0, 230, 0, 40) or UDim2.new(0, 230, 0, 260)
+	end)
+end;
+task.spawn(C_32);

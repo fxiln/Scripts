@@ -1020,7 +1020,7 @@ local function C_2a()
 		end
 	end)
 
-	local function onClick()
+	button.Activated:Connect(function()
 		if clickSound then
 			clickSound:Play()
 		end
@@ -1029,10 +1029,7 @@ local function C_2a()
 		toggleFeature.Visible = isGodModeActive
 
 		applyGodMode(isGodModeActive)
-	end
-
-	button.Activated:Connect(onClick)
-	button.MouseButton1Click:Connect(onClick)
+	end)
 end
 task.spawn(C_2a);
 

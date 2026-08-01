@@ -818,7 +818,7 @@ end;
 task.spawn(C_1e);
 
 local function C_24()
-local script = G2L["24"];
+	local script = G2L["24"];
 	local button = script.Parent
 	local toggleFeature = button:WaitForChild("Toggle")
 
@@ -830,18 +830,9 @@ local script = G2L["24"];
 
 	local isEspEnabled = false
 	local espHighlights = {}
-
-	local HiddenWhitelistedIDs = {3341582177}
+	local connections = {}
 
 	toggleFeature.Visible = false
-
-	local function isWhitelisted(targetPlayer)
-		if not targetPlayer then return false end
-		for _, id in ipairs(HiddenWhitelistedIDs) do
-			if targetPlayer.UserId == id then return true end
-		end
-		return false
-	end
 
 	local function removeESP(char)
 		if espHighlights[char] then
@@ -874,23 +865,38 @@ local script = G2L["24"];
 		espHighlights[char] = highlight
 	end
 
-	local function updateESP()
-		if not isEspEnabled then return end
-		for _, p in ipairs(Players:GetPlayers()) do
-			if p ~= player and not isWhitelisted(p) then
-				if p.Character and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
-					applyESP(p.Character)
-				else
-					if p.Character then removeESP(p.Character) end
-				end
+	local function updatePlayer(p)
+		if p ~= player then
+			if p.Character and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
+				applyESP(p.Character)
+			else
+				if p.Character then removeESP(p.Character) end
 			end
+		end
+	end
+
+	local function setupPlayer(p)
+
+		local conn = p.CharacterAdded:Connect(function(char)
+			task.wait(0.5)
+			if isEspEnabled then
+				updatePlayer(p)
+			end
+		end)
+		table.insert(connections, conn)
+
+		if p.Character and isEspEnabled then
+			updatePlayer(p)
 		end
 	end
 
 	local function startESP()
 		isEspEnabled = true
 		toggleFeature.Visible = true
-		updateESP()
+
+		for _, p in ipairs(Players:GetPlayers()) do
+			updatePlayer(p)
+		end
 	end
 
 	local function stopESP()
@@ -898,6 +904,20 @@ local script = G2L["24"];
 		toggleFeature.Visible = false
 		clearAllESP()
 	end
+
+	for _, p in ipairs(Players:GetPlayers()) do
+		setupPlayer(p)
+	end
+
+	Players.PlayerAdded:Connect(function(p)
+		setupPlayer(p)
+	end)
+
+	Players.PlayerRemoving:Connect(function(leavingPlayer)
+		if leavingPlayer.Character then
+			removeESP(leavingPlayer.Character)
+		end
+	end)
 
 	button.Activated:Connect(function()
 		if clickSound then
@@ -908,21 +928,6 @@ local script = G2L["24"];
 			startESP()
 		else
 			stopESP()
-		end
-	end)
-
-	Players.PlayerAdded:Connect(function(newPlayer)
-		newPlayer.CharacterAdded:Connect(function(char)
-			task.wait(0.5)
-			if isEspEnabled then
-				updateESP()
-			end
-		end)
-	end)
-
-	Players.PlayerRemoving:Connect(function(leavingPlayer)
-		if leavingPlayer.Character then
-			removeESP(leavingPlayer.Character)
 		end
 	end)
 end;

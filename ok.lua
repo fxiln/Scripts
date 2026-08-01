@@ -3,6 +3,11 @@ local G2L = {};
 G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"));
 G2L["1"]["Name"] = [[KoyaScript]];
 
+local clickSound = Instance.new("Sound", G2L["1"])
+clickSound.Name = "UIClickSound"
+clickSound.SoundId = "rbxassetid://93927627634818"
+clickSound.Volume = 0.5
+
 G2L["2"] = Instance.new("Frame", G2L["1"]);
 G2L["2"]["Active"] = true;
 G2L["2"]["BackgroundColor3"] = Color3.fromRGB(35, 39, 48);
@@ -12,9 +17,19 @@ G2L["2"]["Size"] = UDim2.new(0, 230, 0, 260);
 G2L["2"]["Position"] = UDim2.new(0.03, 0, 0, 66);
 G2L["2"]["Name"] = [[MainFrame]];
 
+G2L["2_Shadow"] = Instance.new("UIShadow", G2L["2"]);
+G2L["2_Shadow"]["Name"] = "UIShadow";
+G2L["2_Shadow"]["BlurRadius"] = UDim.new(0.05, 0);
+G2L["2_Shadow"]["Color"] = Color3.fromRGB(0, 0, 0);
+G2L["2_Shadow"]["Offset"] = UDim2.new(0, 0, 0, 0);
+G2L["2_Shadow"]["Spread"] = UDim2.new(0, 0, 0, 0);
+G2L["2_Shadow"]["Transparency"] = 0.5;
+G2L["2_Shadow"]["ZIndex"] = -1;
+
 G2L["3"] = Instance.new("Frame", G2L["2"]);
 G2L["3"]["Size"] = UDim2.new(1, 0, -0.1, 246);
 G2L["3"]["Position"] = UDim2.new(0, 0, 0, 40);
+G2L["3"]["Name"] = [[Container]];
 G2L["3"]["BackgroundTransparency"] = 1;
 
 G2L["4"] = Instance.new("UIListLayout", G2L["3"]);
@@ -86,7 +101,7 @@ G2L["c"]["BackgroundTransparency"] = 1;
 G2L["c"]["Size"] = UDim2.new(1, 0, 0, 26);
 G2L["c"]["Text"] = [[ YouTube: Koya Scripts]];
 G2L["c"]["LayoutOrder"] = 7;
-G2L["c"]["Name"] = [[Label]];
+G2L["c"]["Name"] = [[YoutubeName]];
 
 G2L["d"] = Instance.new("TextLabel", G2L["3"]);
 G2L["d"]["ZIndex"] = 3;
@@ -355,45 +370,51 @@ G2L["2c"]["Name"] = [[Drag]];
 G2L["2d"] = Instance.new("Frame", G2L["2"]);
 G2L["2d"]["BackgroundColor3"] = Color3.fromRGB(50, 55, 69);
 G2L["2d"]["Size"] = UDim2.new(1, 0, 0, 40);
+G2L["2d"]["Name"] = [[Decor]];
 
-G2L["2e"] = Instance.new("UICorner", G2L["2"]);
-G2L["2e"]["CornerRadius"] = UDim.new(0.01, 0);
+G2L["2e"] = Instance.new("UICorner", G2L["2d"]);
+G2L["2e"]["CornerRadius"] = UDim.new(0.1, 0);
 
-G2L["2f"] = Instance.new("TextLabel", G2L["2"]);
-G2L["2f"]["TextWrapped"] = true;
-G2L["2f"]["BorderSizePixel"] = 0;
-G2L["2f"]["TextSize"] = 17;
-G2L["2f"]["BackgroundColor3"] = Color3.fromRGB(11, 11, 11);
-G2L["2f"]["FontFace"] = Font.new([[rbxasset://fonts/families/LuckiestGuy.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-G2L["2f"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["2f"]["BackgroundTransparency"] = 1;
-G2L["2f"]["Size"] = UDim2.new(1, 0, 0, 40);
-G2L["2f"]["Text"] = [[VOXELS]];
+G2L["2f"] = Instance.new("UICorner", G2L["2"]);
+G2L["2f"]["CornerRadius"] = UDim.new(0.01, 0);
 
-G2L["30"] = Instance.new("TextButton", G2L["2f"]);
-G2L["30"]["SizeConstraint"] = Enum.SizeConstraint.RelativeYY;
-G2L["30"]["Selectable"] = false;
-G2L["30"]["ZIndex"] = 3;
-G2L["30"]["AnchorPoint"] = Vector2.new(1, 0.5);
+G2L["30"] = Instance.new("TextLabel", G2L["2"]);
+G2L["30"]["TextWrapped"] = true;
+G2L["30"]["BorderSizePixel"] = 0;
+G2L["30"]["TextSize"] = 17;
+G2L["30"]["BackgroundColor3"] = Color3.fromRGB(11, 11, 11);
+G2L["30"]["FontFace"] = Font.new([[rbxasset://fonts/families/LuckiestGuy.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["30"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["30"]["BackgroundTransparency"] = 1;
-G2L["30"]["Size"] = UDim2.new(0, 40, 0, 40);
-G2L["30"]["Text"] = [[]];
-G2L["30"]["Name"] = [[ToggleButton]];
-G2L["30"]["Position"] = UDim2.new(1, 0, 0.5, 0);
+G2L["30"]["Size"] = UDim2.new(1, 0, 0, 40);
+G2L["30"]["Text"] = [[VOXELS]];
+G2L["30"]["Name"] = [[GameName]];
 
-G2L["31"] = Instance.new("ImageLabel", G2L["30"]);
-G2L["31"]["ZIndex"] = 4;
-G2L["31"]["ScaleType"] = Enum.ScaleType.Fit;
-G2L["31"]["ImageColor3"] = Color3.fromRGB(145, 145, 145);
-G2L["31"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["31"]["Image"] = [[rbxassetid://4918373417]];
-G2L["31"]["Size"] = UDim2.new(0, 11, 0, 11);
+G2L["31"] = Instance.new("TextButton", G2L["2"]);
+G2L["31"]["SizeConstraint"] = Enum.SizeConstraint.RelativeYY;
+G2L["31"]["Selectable"] = false;
+G2L["31"]["ZIndex"] = 3;
+G2L["31"]["AnchorPoint"] = Vector2.new(1, 0);
 G2L["31"]["BackgroundTransparency"] = 1;
-G2L["31"]["Rotation"] = 90;
-G2L["31"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
+G2L["31"]["Size"] = UDim2.new(0, 40, 0, 40);
+G2L["31"]["Text"] = [[]];
+G2L["31"]["Name"] = [[ToggleButton]];
+G2L["31"]["Position"] = UDim2.new(1, 0, 0, 0);
 
-G2L["32"] = Instance.new("LocalScript", G2L["30"]);
-G2L["32"]["Name"] = [[ToggleUI]];
+G2L["32"] = Instance.new("ImageLabel", G2L["31"]);
+G2L["32"]["ZIndex"] = 4;
+G2L["32"]["ScaleType"] = Enum.ScaleType.Fit;
+G2L["32"]["ImageColor3"] = Color3.fromRGB(145, 145, 145);
+G2L["32"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["32"]["Image"] = [[rbxassetid://4918373417]];
+G2L["32"]["Size"] = UDim2.new(0, 11, 0, 11);
+G2L["32"]["BackgroundTransparency"] = 1;
+G2L["32"]["Rotation"] = 90;
+G2L["32"]["Name"] = [[Arrow]];
+G2L["32"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
+
+G2L["33"] = Instance.new("LocalScript", G2L["31"]);
+G2L["33"]["Name"] = [[ToggleUI]];
 
 local function C_b()
 local script = G2L["b"];
@@ -407,18 +428,20 @@ local script = G2L["b"];
 
 	local Remote = ReplicatedStorage:WaitForChild("Systems"):WaitForChild("ActionsSystem"):WaitForChild("Network"):WaitForChild("Attack")
 
-	local screenGui = game:GetService("CoreGui"):FindFirstChild("KoyaScript", 3)
+	local button = script.Parent
+	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound", true)
-
-	local toggleFeature = screenGui and screenGui:FindFirstChild("Toggle", true)
+	local toggleFeature = button:WaitForChild("Toggle")
 
 	local auraRange = 250
 	local targetFOV = 90
 	local attackIndex = 1
 	local hitAmount = 15
 
-	local isRunning = true
+	local isRunning = false
 	local isAttacking = false
+
+	toggleFeature.Visible = false
 
 	player.CharacterAdded:Connect(function(newChar)
 		character = newChar
@@ -442,7 +465,6 @@ local script = G2L["b"];
 		local bestDist = auraRange
 
 		for _, p in ipairs(Players:GetPlayers()) do
-
 			if p ~= player then
 				local targetChar = p.Character
 				if valid(targetChar) then
@@ -471,13 +493,28 @@ local script = G2L["b"];
 		attackIndex = (attackIndex == 1) and 2 or 1
 	end
 
-	if clickSound then
-		clickSound:Play()
-	end
-
-	if toggleFeature then
+	local function startAura()
+		isRunning = true
 		toggleFeature.Visible = true
 	end
+
+	local function stopAura()
+		isRunning = false
+		toggleFeature.Visible = false
+		isAttacking = false
+	end
+
+	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
+
+		if not isRunning then
+			startAura()
+		else
+			stopAura()
+		end
+	end)
 
 	RunService.Heartbeat:Connect(function()
 		if not isRunning or isAttacking then return end
@@ -963,7 +1000,7 @@ local function C_2c()
 local script = G2L["2c"];
 	local UserInputService = game:GetService("UserInputService")
 
-	local ImageButton = script.Parent
+	local MainFrame = script.Parent
 
 	local dragging = false
 	local dragInput
@@ -972,7 +1009,7 @@ local script = G2L["2c"];
 
 	local function update(input)
 		local delta = input.Position - dragStart
-		ImageButton.Position = UDim2.new(
+		MainFrame.Position = UDim2.new(
 			startPos.X.Scale,
 			startPos.X.Offset + delta.X,
 			startPos.Y.Scale,
@@ -980,11 +1017,11 @@ local script = G2L["2c"];
 		)
 	end
 
-	ImageButton.InputBegan:Connect(function(input)
+	MainFrame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
-			startPos = ImageButton.Position
+			startPos = MainFrame.Position
 
 			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
@@ -994,7 +1031,7 @@ local script = G2L["2c"];
 		end
 	end)
 
-	ImageButton.InputChanged:Connect(function(input)
+	MainFrame.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
@@ -1008,17 +1045,16 @@ local script = G2L["2c"];
 end;
 task.spawn(C_2c);
 
-local function C_32()
-local script = G2L["32"];
+local function C_33()
+local script = G2L["33"];
 	local scriptButton = script.Parent
-	local screenGui = script.Parent:FindFirstAncestorOfClass("ScreenGui")
-	local Main = screenGui:WaitForChild("Main")
-	local imageLabel = scriptButton:FindFirstChildOfClass("ImageLabel")
+	local Main = scriptButton.Parent
+	local Arrow = scriptButton:FindFirstChild("Arrow")
 	local TweenService = game:GetService("TweenService")
 
 	local defaultSize = Main.Size
 	local targetSize = UDim2.new(0, 230, 0, 40)
-	local defaultRotation = imageLabel and imageLabel.Rotation or 0
+	local defaultRotation = Arrow and Arrow.Rotation or 0
 	local targetRotation = 180
 	local isExpanded = false
 
@@ -1044,12 +1080,12 @@ local script = G2L["32"];
 		local sizeTween = TweenService:Create(Main, tweenInfo, {Size = newSize})
 		sizeTween:Play()
 
-		if imageLabel then
-			local rotationTween = TweenService:Create(imageLabel, tweenInfo, {Rotation = newRotation})
+		if Arrow then
+			local rotationTween = TweenService:Create(Arrow, tweenInfo, {Rotation = newRotation})
 			rotationTween:Play()
 		end
 	end)
 end;
-task.spawn(C_32);
+task.spawn(C_33);
 
 return G2L["1"], require;

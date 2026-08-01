@@ -1,3 +1,20 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
+
+if game:GetService("CoreGui"):FindFirstChild("KoyaScript") then
+    return
+end
+
+task.spawn(function()
+    local Players = game:GetService("Players")
+    local VirtualUser = game:GetService("VirtualUser")
+    local localPlayer = Players.LocalPlayer
+
+    localPlayer.Idled:Connect(function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
+end)
+
 local G2L = {};
 
 G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"));

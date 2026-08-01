@@ -332,9 +332,9 @@ G2L["25"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], E
 G2L["25"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["25"]["BackgroundTransparency"] = 1;
 G2L["25"]["Size"] = UDim2.new(1, 0, 0, 31);
-G2L["25"]["Text"] = [[ God Mode]];
+G2L["25"]["Text"] = [[ Anti Fall]];
 G2L["25"]["LayoutOrder"] = 6;
-G2L["25"]["Name"] = [[Godmode_Text]];
+G2L["25"]["Name"] = [[AntiFall_Text]];
 
 G2L["26"] = Instance.new("TextButton", G2L["25"]);
 G2L["26"]["BorderSizePixel"] = 0;
@@ -433,6 +433,12 @@ G2L["32"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
 G2L["33"] = Instance.new("LocalScript", G2L["31"]);
 G2L["33"]["Name"] = [[ToggleUI]];
 
+local function safeConnect(signal, callback)
+    if signal and signal.Connect then
+        return signal:Connect(callback)
+    end
+end
+
 local function C_b()
 	local script = G2L["b"];
 	local Players = game:GetService("Players")
@@ -459,7 +465,7 @@ local function C_b()
 
 	toggleFeature.Visible = false
 
-	player.CharacterAdded:Connect(function(newChar)
+	safeConnect(player.CharacterAdded, function(newChar)
 		character = newChar
 	end)
 
@@ -523,7 +529,7 @@ local function C_b()
 		isAttacking = false
 	end
 
-	button.Activated:Connect(function()
+	safeConnect(button.Activated, function()
 		if clickSound then
 			clickSound:Play()
 		end
@@ -535,7 +541,7 @@ local function C_b()
 		end
 	end)
 
-	RunService.Heartbeat:Connect(function()
+	safeConnect(RunService.Heartbeat, function()
 		if not isRunning or isAttacking then return end
 
 		local target = getAimedTarget()
@@ -587,7 +593,7 @@ local script = G2L["12"];
 
 	toggleFeature.Visible = false
 
-	player.CharacterAdded:Connect(function(newChar)
+	safeConnect(player.CharacterAdded, function(newChar)
 		character = newChar
 		if isFlying then
 			isFlying = false
@@ -633,7 +639,7 @@ local script = G2L["12"];
 		flyBodyVelocity.Velocity = Vector3.zero
 		flyBodyVelocity.Parent = hrp
 
-		flyRenderConn = RunService.RenderStepped:Connect(function()
+		flyRenderConn = safeConnect(RunService.RenderStepped, function()
 			if not isFlying then return end
 			if not character or not character.Parent or hum.Health <= 0 then
 				stopFly()
@@ -654,7 +660,7 @@ local script = G2L["12"];
 		end)
 	end
 
-	button.Activated:Connect(function()
+	safeConnect(button.Activated, function()
 		if clickSound then
 			clickSound:Play()
 		end
@@ -666,7 +672,7 @@ local script = G2L["12"];
 		end
 	end)
 
-	UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	safeConnect(UserInputService.InputBegan, function(input, gameProcessed)
 		if gameProcessed then return end
 		if input.KeyCode == Enum.KeyCode.W then flyMove.forward = 1
 		elseif input.KeyCode == Enum.KeyCode.S then flyMove.backward = 1
@@ -677,7 +683,7 @@ local script = G2L["12"];
 		end
 	end)
 
-	UserInputService.InputEnded:Connect(function(input)
+	safeConnect(UserInputService.InputEnded, function(input)
 		if input.KeyCode == Enum.KeyCode.W then flyMove.forward = 0
 		elseif input.KeyCode == Enum.KeyCode.S then flyMove.backward = 0
 		elseif input.KeyCode == Enum.KeyCode.A then flyMove.left = 0
@@ -708,7 +714,7 @@ local script = G2L["18"];
 
 	toggleFeature.Visible = false
 
-	player.CharacterAdded:Connect(function(newChar)
+	safeConnect(player.CharacterAdded, function(newChar)
 		character = newChar
 	end)
 
@@ -719,7 +725,7 @@ local script = G2L["18"];
 		if jumpConnection then jumpConnection:Disconnect() end
 
 		local humanoid = character:WaitForChild("Humanoid")
-		jumpConnection = humanoid.Jumping:Connect(function()
+		jumpConnection = safeConnect(humanoid.Jumping, function()
 			if isInfJumpEnabled and character then
 				local hrp = character:FindFirstChild("HumanoidRootPart")
 				if hrp then
@@ -738,7 +744,7 @@ local script = G2L["18"];
 		end
 	end
 
-	button.Activated:Connect(function()
+	safeConnect(button.Activated, function()
 		if clickSound then
 			clickSound:Play()
 		end
@@ -750,7 +756,7 @@ local script = G2L["18"];
 		end
 	end)
 
-	UserInputService.JumpRequest:Connect(function()
+	safeConnect(UserInputService.JumpRequest, function()
 		if isInfJumpEnabled and character then
 			local hrp = character:FindFirstChild("HumanoidRootPart")
 			if hrp then
@@ -782,13 +788,13 @@ local script = G2L["1e"];
 
 	toggleFeature.Visible = false
 
-	player.CharacterAdded:Connect(function(newChar)
+	safeConnect(player.CharacterAdded, function(newChar)
 		character = newChar
 		if isSpeedEnabled then
 			if speedConn then speedConn:Disconnect() end
 			local hum = character:WaitForChild("Humanoid")
 			hum.WalkSpeed = walkSpeed
-			speedConn = RunService.Heartbeat:Connect(function()
+			speedConn = safeConnect(RunService.Heartbeat, function()
 				if character and character:FindFirstChild("Humanoid") and character.Humanoid.WalkSpeed ~= walkSpeed then
 					character.Humanoid.WalkSpeed = walkSpeed
 				end
@@ -808,7 +814,7 @@ local script = G2L["1e"];
 		hum.WalkSpeed = walkSpeed
 
 		if speedConn then speedConn:Disconnect() end
-		speedConn = RunService.Heartbeat:Connect(function()
+		speedConn = safeConnect(RunService.Heartbeat, function()
 			if isSpeedEnabled and character and character:FindFirstChild("Humanoid") then
 				if character.Humanoid.WalkSpeed ~= walkSpeed then
 					character.Humanoid.WalkSpeed = walkSpeed
@@ -833,7 +839,7 @@ local script = G2L["1e"];
 		end
 	end
 
-	button.Activated:Connect(function()
+	safeConnect(button.Activated, function()
 		if clickSound then
 			clickSound:Play()
 		end
@@ -906,8 +912,7 @@ local function C_24()
 	end
 
 	local function setupPlayer(p)
-
-		local conn = p.CharacterAdded:Connect(function(char)
+		local conn = safeConnect(p.CharacterAdded, function(char)
 			task.wait(0.5)
 			if isEspEnabled then
 				updatePlayer(p)
@@ -939,17 +944,17 @@ local function C_24()
 		setupPlayer(p)
 	end
 
-	Players.PlayerAdded:Connect(function(p)
+	safeConnect(Players.PlayerAdded, function(p)
 		setupPlayer(p)
 	end)
 
-	Players.PlayerRemoving:Connect(function(leavingPlayer)
+	safeConnect(Players.PlayerRemoving, function(leavingPlayer)
 		if leavingPlayer.Character then
 			removeESP(leavingPlayer.Character)
 		end
 	end)
 
-	button.Activated:Connect(function()
+	safeConnect(button.Activated, function()
 		if clickSound then
 			clickSound:Play()
 		end
@@ -964,73 +969,82 @@ end;
 task.spawn(C_24);
 
 local function C_2a()
-	local script = G2L["2a"]
+	local script = G2L["2a"];
 	local button = script.Parent
 	local toggleFeature = button:WaitForChild("Toggle")
 
 	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-	local Players = game:GetService("Players")
-	local localPlayer = Players.LocalPlayer
 
-	local isGodModeActive = false
+	local Players = game:GetService("Players")
+	local player = Players.LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+
+	local isAntiFallEnabled = false
+	local fallConn
+
 	toggleFeature.Visible = false
 
-	button.Active = true
-
-	local oldNamecall
-	task.spawn(function()
-		oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
-			local method = getnamecallmethod()
-			local args = {...}
-
-			if isGodModeActive then
-				if method == "FireServer" or method == "InvokeServer" then
-					local nameStr = string.lower(tostring(self))
-					if nameStr:find("falldamage") or nameStr:find("damage") or nameStr:find("lava") then
-						return
-					end
+	safeConnect(player.CharacterAdded, function(newChar)
+		character = newChar
+		if isAntiFallEnabled then
+			local hum = character:WaitForChild("Humanoid")
+			fallConn = safeConnect(hum.StateChanged, function(_, newState)
+				if newState == Enum.HumanoidStateType.Freefall then
+					task.delay(0.1, function()
+						if character and character:FindFirstChild("HumanoidRootPart") then
+							local hrp = character.HumanoidRootPart
+							if hrp.AssemblyLinearVelocity.Y < -50 then
+								hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, 0, hrp.AssemblyLinearVelocity.Z)
+							end
+						end
+					end)
 				end
-			end
-
-			return oldNamecall(self, ...)
-		end)
+			end)
+		end
 	end)
 
-	local function applyGodMode(state)
-		local char = localPlayer.Character
-		if not char then return end
-		local humanoid = char:FindFirstChildOfClass("Humanoid")
-
-		if humanoid then
-			if state then
-				humanoid.MaxHealth = math.huge
-				humanoid.Health = math.huge
-			else
-				humanoid.MaxHealth = 100
-				humanoid.Health = 100
+	local function startAntiFall()
+		isAntiFallEnabled = true
+		toggleFeature.Visible = true
+		if character then
+			local hum = character:FindFirstChildWhichIsA("Humanoid")
+			if hum then
+				if fallConn then pcall(function() fallConn:Disconnect() end) end
+				fallConn = safeConnect(hum.StateChanged, function(_, newState)
+					if newState == Enum.HumanoidStateType.Freefall then
+						task.delay(0.1, function()
+							if character and character:FindFirstChild("HumanoidRootPart") then
+								local hrp = character.HumanoidRootPart
+								if hrp.AssemblyLinearVelocity.Y < -50 then
+									hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, 0, hrp.AssemblyLinearVelocity.Z)
+								end
+							end
+						end)
+					end
+				end)
 			end
 		end
 	end
 
-	localPlayer.CharacterAdded:Connect(function(char)
-		task.wait(0.5)
-		if isGodModeActive then
-			applyGodMode(true)
+	local function stopAntiFall()
+		isAntiFallEnabled = false
+		toggleFeature.Visible = false
+		if fallConn then
+			pcall(function() fallConn:Disconnect() end)
+			fallConn = nil
+		end
+	end
+
+	safeConnect(button.Activated, function()
+		if clickSound then clickSound:Play() end
+		if not isAntiFallEnabled then
+			startAntiFall()
+		else
+			stopAntiFall()
 		end
 	end)
-
-	button.Activated:Connect(function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		isGodModeActive = not isGodModeActive
-		toggleFeature.Visible = isGodModeActive
-
-		applyGodMode(isGodModeActive)
-	end)
-end
+end;
 task.spawn(C_2a);
 
 local function C_2c()
@@ -1054,13 +1068,13 @@ local script = G2L["2c"];
 		)
 	end
 
-	MainFrame.InputBegan:Connect(function(input)
+	safeConnect(MainFrame.InputBegan, function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
 			startPos = MainFrame.Position
 
-			input.Changed:Connect(function()
+			safeConnect(input.Changed, function()
 				if input.UserInputState == Enum.UserInputState.End then
 					dragging = false
 				end
@@ -1068,13 +1082,13 @@ local script = G2L["2c"];
 		end
 	end)
 
-	MainFrame.InputChanged:Connect(function(input)
+	safeConnect(MainFrame.InputChanged, function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
 	end)
 
-	UserInputService.InputChanged:Connect(function(input)
+	safeConnect(UserInputService.InputChanged, function(input)
 		if input == dragInput and dragging then
 			update(input)
 		end
@@ -1101,7 +1115,7 @@ local script = G2L["33"];
 		Enum.EasingDirection.Out
 	)
 
-	scriptButton.Activated:Connect(function()
+	safeConnect(scriptButton.Activated, function()
 		local newSize
 		local newRotation
 		if isExpanded then

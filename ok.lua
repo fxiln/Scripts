@@ -451,7 +451,7 @@ local function C_b()
 	local toggleFeature = button:WaitForChild("Toggle")
 
 	local auraRange = 250
-	local targetFOV = 90
+	local targetFOV = 10
 	local attackIndex = 1
 	local hitAmount = 15
 

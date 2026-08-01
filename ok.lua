@@ -451,7 +451,6 @@ local function C_b()
 	local toggleFeature = button:WaitForChild("Toggle")
 
 	local auraRange = 250
-	local targetFOV = 10
 	local attackIndex = 1
 	local hitAmount = 15
 
@@ -471,38 +470,39 @@ local function C_b()
 			and char.Humanoid.Health > 0
 	end
 
-	local function getLookTarget()
+	local function getAimedTarget()
 		local currentCharacter = player.Character
 		if not valid(currentCharacter) then return nil end
+
+		local currentRoot = currentCharacter:FindFirstChild("HumanoidRootPart")
+		if not currentRoot then return nil end
 
 		local cam = Workspace.CurrentCamera
 		if not cam then return nil end
 
-		local camPos = cam.CFrame.Position
-		local lookDir = cam.CFrame.LookVector
-		local bestTarget, bestDot = nil, math.cos(math.rad(targetFOV))
-		local bestDist = auraRange
+		local viewportSize = cam.ViewportSize
+		local screenCenter = Vector2.new(viewportSize.X / 2, viewportSize.Y / 2)
+		local unitRay = cam:ViewportPointToRay(screenCenter.X, screenCenter.Y)
 
-		for _, p in ipairs(Players:GetPlayers()) do
-			if p ~= player then
-				local targetChar = p.Character
-				if valid(targetChar) then
-					local targetRoot = targetChar.HumanoidRootPart
-					local toTarget = targetRoot.Position - camPos
-					local mag = toTarget.Magnitude
+		local raycastParams = RaycastParams.new()
+		raycastParams.FilterDescendantsInstances = {currentCharacter}
+		raycastParams.FilterType = Enum.RaycastFilterType.Exclude
 
-					if mag <= bestDist then
-						local dot = lookDir:Dot(toTarget.Unit)
-						if dot > bestDot then
-							bestDot = dot
-							bestTarget = targetChar
-							bestDist = mag
-						end
+		local result = Workspace:Raycast(unitRay.Origin, unitRay.Direction * auraRange, raycastParams)
+
+		if result and result.Instance then
+			local targetChar = result.Instance.Parent
+			if targetChar and targetChar:FindFirstChild("Humanoid") then
+				local targetPlayer = Players:GetPlayerFromCharacter(targetChar)
+				if targetPlayer and targetPlayer ~= player then
+					if valid(targetChar) then
+						return targetChar
 					end
 				end
 			end
 		end
-		return bestTarget
+
+		return nil
 	end
 
 	local function hit(target)
@@ -538,7 +538,7 @@ local function C_b()
 	RunService.Heartbeat:Connect(function()
 		if not isRunning or isAttacking then return end
 
-		local target = getLookTarget()
+		local target = getAimedTarget()
 		if target then
 			isAttacking = true
 
@@ -546,7 +546,7 @@ local function C_b()
 				for i = 1, hitAmount do
 					if not isRunning then break end
 					
-					local currentTarget = getLookTarget()
+					local currentTarget = getAimedTarget()
 					
 					if not currentTarget then
 						break

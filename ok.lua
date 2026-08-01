@@ -964,7 +964,7 @@ end;
 task.spawn(C_24);
 
 local function C_2a()
-local script = G2L["2a"];
+	local script = G2L["2a"]
 	local button = script.Parent
 	local toggleFeature = button:WaitForChild("Toggle")
 
@@ -976,22 +976,25 @@ local script = G2L["2a"];
 	local isGodModeActive = false
 	toggleFeature.Visible = false
 
+	button.Active = true
+
 	local oldNamecall
-	oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
-		local method = getnamecallmethod()
-		local args = {...}
+	task.spawn(function()
+		oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+			local method = getnamecallmethod()
+			local args = {...}
 
-		if isGodModeActive then
-
-			if method == "FireServer" or method == "InvokeServer" then
-				local nameStr = string.lower(tostring(self))
-				if nameStr:find("falldamage") or nameStr:find("damage") or nameStr:find("lava") then
-					return
+			if isGodModeActive then
+				if method == "FireServer" or method == "InvokeServer" then
+					local nameStr = string.lower(tostring(self))
+					if nameStr:find("falldamage") or nameStr:find("damage") or nameStr:find("lava") then
+						return
+					end
 				end
 			end
-		end
 
-		return oldNamecall(self, ...)
+			return oldNamecall(self, ...)
+		end)
 	end)
 
 	local function applyGodMode(state)
@@ -1001,7 +1004,6 @@ local script = G2L["2a"];
 
 		if humanoid then
 			if state then
-
 				humanoid.MaxHealth = math.huge
 				humanoid.Health = math.huge
 			else
@@ -1018,7 +1020,7 @@ local script = G2L["2a"];
 		end
 	end)
 
-	button.Activated:Connect(function()
+	local function onClick()
 		if clickSound then
 			clickSound:Play()
 		end
@@ -1027,8 +1029,11 @@ local script = G2L["2a"];
 		toggleFeature.Visible = isGodModeActive
 
 		applyGodMode(isGodModeActive)
-	end)
-end;
+	end
+
+	button.Activated:Connect(onClick)
+	button.MouseButton1Click:Connect(onClick)
+end
 task.spawn(C_2a);
 
 local function C_2c()

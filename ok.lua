@@ -417,7 +417,7 @@ G2L["33"] = Instance.new("LocalScript", G2L["31"]);
 G2L["33"]["Name"] = [[ToggleUI]];
 
 local function C_b()
-local script = G2L["b"];
+	local script = G2L["b"];
 	local Players = game:GetService("Players")
 	local ReplicatedStorage = game:GetService("ReplicatedStorage")
 	local RunService = game:GetService("RunService")
@@ -436,7 +436,7 @@ local script = G2L["b"];
 	local auraRange = 250
 	local targetFOV = 90
 	local attackIndex = 1
-	local hitAmount = 60
+	local hitAmount = 15
 
 	local isRunning = false
 	local isAttacking = false
@@ -455,7 +455,10 @@ local script = G2L["b"];
 	end
 
 	local function getLookTarget()
-		if not valid(character) then return nil end
+
+		local currentCharacter = player.Character
+		if not valid(currentCharacter) then return nil end
+
 		local cam = Workspace.CurrentCamera
 		if not cam then return nil end
 
@@ -523,11 +526,13 @@ local script = G2L["b"];
 		if target then
 			isAttacking = true
 
-			for i = 1, hitAmount do
-				hit(target)
-			end
+			task.spawn(function()
+				for i = 1, hitAmount do
+					if not isRunning then break end
+					hit(target)
+				end
 
-			task.delay(0.1, function()
+				task.wait(0.05)
 				isAttacking = false
 			end)
 		end

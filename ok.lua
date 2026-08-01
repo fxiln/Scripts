@@ -436,7 +436,7 @@ local script = G2L["b"];
 	local auraRange = 250
 	local targetFOV = 90
 	local attackIndex = 1
-	local hitAmount = 15
+	local hitAmount = 60
 
 	local isRunning = false
 	local isAttacking = false

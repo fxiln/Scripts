@@ -969,80 +969,40 @@ end;
 task.spawn(C_24);
 
 local function C_2a()
-	local script = G2L["2a"];
+local script = G2L["2a"];
 	local button = script.Parent
 	local toggleFeature = button:WaitForChild("Toggle")
 
 	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
 	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
 
-	local Players = game:GetService("Players")
-	local player = Players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-
-	local isAntiFallEnabled = false
-	local fallConn
+	local isAntiFallActive = false
 
 	toggleFeature.Visible = false
 
-	safeConnect(player.CharacterAdded, function(newChar)
-		character = newChar
-		if isAntiFallEnabled then
-			local hum = character:WaitForChild("Humanoid")
-			fallConn = safeConnect(hum.StateChanged, function(_, newState)
-				if newState == Enum.HumanoidStateType.Freefall then
-					task.delay(0.1, function()
-						if character and character:FindFirstChild("HumanoidRootPart") then
-							local hrp = character.HumanoidRootPart
-							if hrp.AssemblyLinearVelocity.Y < -50 then
-								hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, 0, hrp.AssemblyLinearVelocity.Z)
-							end
-						end
-					end)
-				end
-			end)
+	local rawget = getrawmetatable(game)
+	local oldNamecall = rawget.__namecall
+	setreadonly(rawget, false)
+
+	rawget.__namecall = newcclosure(function(self, ...)
+		local method = getnamecallmethod()
+
+		if isAntiFallActive and method == "FireServer" and tostring(self) == "FallDamage" then
+			return nil
 		end
+
+		return oldNamecall(self, ...)
 	end)
 
-	local function startAntiFall()
-		isAntiFallEnabled = true
-		toggleFeature.Visible = true
-		if character then
-			local hum = character:FindFirstChildWhichIsA("Humanoid")
-			if hum then
-				if fallConn then pcall(function() fallConn:Disconnect() end) end
-				fallConn = safeConnect(hum.StateChanged, function(_, newState)
-					if newState == Enum.HumanoidStateType.Freefall then
-						task.delay(0.1, function()
-							if character and character:FindFirstChild("HumanoidRootPart") then
-								local hrp = character.HumanoidRootPart
-								if hrp.AssemblyLinearVelocity.Y < -50 then
-									hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, 0, hrp.AssemblyLinearVelocity.Z)
-								end
-							end
-						end)
-					end
-				end)
-			end
-		end
-	end
+	setreadonly(rawget, true)
 
-	local function stopAntiFall()
-		isAntiFallEnabled = false
-		toggleFeature.Visible = false
-		if fallConn then
-			pcall(function() fallConn:Disconnect() end)
-			fallConn = nil
+	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
 		end
-	end
 
-	safeConnect(button.Activated, function()
-		if clickSound then clickSound:Play() end
-		if not isAntiFallEnabled then
-			startAntiFall()
-		else
-			stopAntiFall()
-		end
+		isAntiFallActive = not isAntiFallActive
+		toggleFeature.Visible = isAntiFallActive
 	end)
 end;
 task.spawn(C_2a);

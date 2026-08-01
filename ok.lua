@@ -436,7 +436,7 @@ local function C_b()
 	local auraRange = 250
 	local targetFOV = 90
 	local attackIndex = 1
-	local hitAmount = 1        
+	local hitAmount = 15
 
 	local isRunning = false
 	local isAttacking = false
@@ -526,13 +526,21 @@ local function C_b()
 			isAttacking = true
 
 			task.spawn(function()
-	
 				for i = 1, hitAmount do
 					if not isRunning then break end
+					
+					local currentTarget = getLookTarget()
+					
+					if not currentTarget then
+						break
+					end
+					
+					target = currentTarget
+					
 					hit(target)
+					task.wait(0.01)
 				end
 
-				task.wait(0.05)
 				isAttacking = false
 			end)
 		end

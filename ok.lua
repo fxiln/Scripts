@@ -436,7 +436,7 @@ local function C_b()
 	local auraRange = 250
 	local targetFOV = 90
 	local attackIndex = 1
-	local hitAmount = 999999
+	local hitAmount = 1        
 
 	local isRunning = false
 	local isAttacking = false
@@ -455,7 +455,6 @@ local function C_b()
 	end
 
 	local function getLookTarget()
-
 		local currentCharacter = player.Character
 		if not valid(currentCharacter) then return nil end
 
@@ -527,6 +526,7 @@ local function C_b()
 			isAttacking = true
 
 			task.spawn(function()
+	
 				for i = 1, hitAmount do
 					if not isRunning then break end
 					hit(target)

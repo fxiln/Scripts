@@ -19,6 +19,7 @@ local G2L = {};
 
 G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"));
 G2L["1"]["Name"] = [[KoyaScript]];
+G2L["1"]["ResetOnSpawn"] = false;
 
 local clickSound = Instance.new("Sound", G2L["1"])
 clickSound.Name = "UIClickSound"

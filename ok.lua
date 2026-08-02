@@ -25,6 +25,10 @@ clickSound.Name = "UIClickSound"
 clickSound.SoundId = "rbxassetid://93927627634818"
 clickSound.Volume = 0.5
 
+task.spawn(function()
+	game:GetService("ContentProvider"):PreloadAsync({clickSound})
+end)
+
 G2L["2"] = Instance.new("Frame", G2L["1"]);
 G2L["2"]["Active"] = true;
 G2L["2"]["BackgroundColor3"] = Color3.fromRGB(35, 39, 48);
@@ -204,9 +208,9 @@ G2L["13"]["Name"] = [[DescriptionLabel]];
 G2L["13"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
 G2L["14"] = Instance.new("TextButton", G2L["12"]);
-G2L["14"]["Interactable"] = false;
 G2L["14"]["BorderSizePixel"] = 0;
 G2L["14"]["TextSize"] = 14;
+G2L["14"]["AutoButtonColor"] = false;
 G2L["14"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
 G2L["14"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
 G2L["14"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
@@ -746,7 +750,7 @@ local script = G2L["2d"];
 	local defaultSize = Main.Size
 	local targetSize = UDim2.new(0, 230, 0, 40)
 	local defaultRotation = Arrow and Arrow.Rotation or 0
-	local targetRotation = 90
+	local targetRotation = 180
 	local isExpanded = false
 
 	local tweenInfo = TweenInfo.new(

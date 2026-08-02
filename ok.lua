@@ -1,18 +1,18 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
 
 if game:GetService("CoreGui"):FindFirstChild("KoyaScript") then
-    return
+	return
 end
 
 task.spawn(function()
-    local Players = game:GetService("Players")
-    local VirtualUser = game:GetService("VirtualUser")
-    local localPlayer = Players.LocalPlayer
+	local Players = game:GetService("Players")
+	local VirtualUser = game:GetService("VirtualUser")
+	local localPlayer = Players.LocalPlayer
 
-    localPlayer.Idled:Connect(function()
-        VirtualUser:CaptureController()
-        VirtualUser:ClickButton2(Vector2.new())
-    end)
+	localPlayer.Idled:Connect(function()
+		VirtualUser:CaptureController()
+		VirtualUser:ClickButton2(Vector2.new())
+	end)
 end)
 
 local G2L = {};
@@ -31,7 +31,8 @@ G2L["2"]["BackgroundColor3"] = Color3.fromRGB(35, 39, 48);
 G2L["2"]["Selectable"] = true;
 G2L["2"]["ClipsDescendants"] = true;
 G2L["2"]["Size"] = UDim2.new(0, 230, 0, 260);
-G2L["2"]["Position"] = UDim2.new(0.03, 0, 0, 66);
+G2L["2"]["Position"] = UDim2.new(0.03, -12, 0, 6);
+G2L["2"]["BorderColor3"] = Color3.fromRGB(35, 39, 48);
 G2L["2"]["Name"] = [[MainFrame]];
 
 G2L["2_Shadow"] = Instance.new("UIShadow", G2L["2"]);
@@ -40,10 +41,11 @@ G2L["2_Shadow"]["BlurRadius"] = UDim.new(0.05, 0);
 G2L["2_Shadow"]["Color"] = Color3.fromRGB(0, 0, 0);
 G2L["2_Shadow"]["Offset"] = UDim2.new(0, 0, 0, 0);
 G2L["2_Shadow"]["Spread"] = UDim2.new(0, 0, 0, 0);
-G2L["2_Shadow"]["Transparency"] = 0.5;
-G2L["2_Shadow"]["ZIndex"] = -1;
+G2L["2_Shadow"]["Transparency"] = 0.6;
+G2L["2_Shadow"]["ZIndex"] = 0;
 
 G2L["3"] = Instance.new("Frame", G2L["2"]);
+G2L["3"]["ZIndex"] = 2;
 G2L["3"]["Size"] = UDim2.new(1, 0, -0.1, 246);
 G2L["3"]["Position"] = UDim2.new(0, 0, 0, 40);
 G2L["3"]["Name"] = [[Container]];
@@ -58,957 +60,598 @@ G2L["5"]["PaddingRight"] = UDim.new(0, 1);
 G2L["5"]["PaddingLeft"] = UDim.new(0, 1);
 
 G2L["6"] = Instance.new("TextLabel", G2L["3"]);
-G2L["6"]["ZIndex"] = 3;
+G2L["6"]["ZIndex"] = 4;
 G2L["6"]["TextSize"] = 17;
 G2L["6"]["TextXAlignment"] = Enum.TextXAlignment.Left;
 G2L["6"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
 G2L["6"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["6"]["BackgroundTransparency"] = 1;
-G2L["6"]["Size"] = UDim2.new(1, 0, 0, 31);
-G2L["6"]["Text"] = [[ Kill Aura]];
-G2L["6"]["LayoutOrder"] = 1;
-G2L["6"]["Name"] = [[Kill_Aura_Text]];
+G2L["6"]["RichText"] = true;
+G2L["6"]["Size"] = UDim2.new(1, 0, 0, 26);
+G2L["6"]["Text"] = [[<font color="#FF0000"> YouTube:</font> <font color="#FFFFFF">Koya Scripts</font>]];
+G2L["6"]["LayoutOrder"] = 7;
+G2L["6"]["Name"] = [[YoutubeName]];
 
-G2L["7"] = Instance.new("TextButton", G2L["6"]);
+G2L["7"] = Instance.new("Frame", G2L["3"]);
+G2L["7"]["ZIndex"] = 3;
 G2L["7"]["BorderSizePixel"] = 0;
-G2L["7"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
-G2L["7"]["AnchorPoint"] = Vector2.new(1, 0.5);
-G2L["7"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["7"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["7"]["Size"] = UDim2.new(1, 0, 0, 31);
 G2L["7"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["7"]["Text"] = [[]];
-G2L["7"]["Name"] = [[B_Button]];
-G2L["7"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
+G2L["7"]["Name"] = [[Template]];
+G2L["7"]["LayoutOrder"] = 2;
+G2L["7"]["BackgroundTransparency"] = 1;
 
-G2L["8"] = Instance.new("UIStroke", G2L["7"]);
-G2L["8"]["Color"] = Color3.fromRGB(172, 177, 189);
-G2L["8"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["8"] = Instance.new("TextLabel", G2L["7"]);
+G2L["8"]["Interactable"] = false;
+G2L["8"]["ZIndex"] = 4;
+G2L["8"]["BorderSizePixel"] = 0;
+G2L["8"]["TextSize"] = 17;
+G2L["8"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["8"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["8"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
+G2L["8"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["8"]["BackgroundTransparency"] = 1;
+G2L["8"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["8"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["8"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["8"]["Text"] = [[ Infinite EXP Boost]];
+G2L["8"]["Name"] = [[DescriptionLabel]];
+G2L["8"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
-G2L["9"] = Instance.new("Frame", G2L["7"]);
-G2L["9"]["Visible"] = false;
-G2L["9"]["ZIndex"] = 2;
+G2L["9"] = Instance.new("TextButton", G2L["7"]);
 G2L["9"]["BorderSizePixel"] = 0;
-G2L["9"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
-G2L["9"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["9"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
-G2L["9"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
+G2L["9"]["TextSize"] = 14;
+G2L["9"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["9"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
+G2L["9"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["9"]["ZIndex"] = 4;
+G2L["9"]["AnchorPoint"] = Vector2.new(1, 0.5);
+G2L["9"]["Size"] = UDim2.new(0, 19, 0, 19);
 G2L["9"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["9"]["Name"] = [[Toggle]];
+G2L["9"]["Text"] = [[]];
+G2L["9"]["Name"] = [[Button]];
+G2L["9"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
 
-G2L["a"] = Instance.new("ImageLabel", G2L["7"]);
-G2L["a"]["ZIndex"] = 2;
+G2L["a"] = Instance.new("Frame", G2L["9"]);
+G2L["a"]["Visible"] = false;
+G2L["a"]["Interactable"] = false;
+G2L["a"]["ZIndex"] = 5;
 G2L["a"]["BorderSizePixel"] = 0;
-G2L["a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["a"]["ImageTransparency"] = 0.39;
-G2L["a"]["ImageColor3"] = Color3.fromRGB(51, 51, 51);
-G2L["a"]["Image"] = [[rbxassetid://18720640102]];
-G2L["a"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["a"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
+G2L["a"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["a"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
+G2L["a"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 G2L["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["a"]["BackgroundTransparency"] = 1;
-G2L["a"]["Name"] = [[Vignette]];
+G2L["a"]["Name"] = [[ToggleFrame]];
 
-G2L["b"] = Instance.new("LocalScript", G2L["7"]);
+G2L["b"] = Instance.new("UIStroke", G2L["9"]);
+G2L["b"]["Color"] = Color3.fromRGB(172, 177, 189);
+G2L["b"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
 
-G2L["c"] = Instance.new("TextLabel", G2L["3"]);
-G2L["c"]["ZIndex"] = 3;
-G2L["c"]["TextSize"] = 17;
-G2L["c"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["c"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
-G2L["c"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["c"]["BackgroundTransparency"] = 1;
-G2L["c"]["Size"] = UDim2.new(1, 0, 0, 26);
-G2L["c"]["Text"] = [[ YouTube: Koya Scripts]];
-G2L["c"]["LayoutOrder"] = 7;
-G2L["c"]["Name"] = [[YoutubeName]];
+G2L["c"] = Instance.new("LocalScript", G2L["9"]);
 
-G2L["d"] = Instance.new("TextLabel", G2L["3"]);
+G2L["d"] = Instance.new("Frame", G2L["3"]);
 G2L["d"]["ZIndex"] = 3;
-G2L["d"]["TextSize"] = 17;
-G2L["d"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["d"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
-G2L["d"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["d"]["BackgroundTransparency"] = 1;
+G2L["d"]["BorderSizePixel"] = 0;
+G2L["d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["d"]["Size"] = UDim2.new(1, 0, 0, 31);
-G2L["d"]["Text"] = [[ Flying]];
-G2L["d"]["LayoutOrder"] = 3;
-G2L["d"]["Name"] = [[Flying_Text]];
+G2L["d"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["d"]["Name"] = [[Template]];
+G2L["d"]["LayoutOrder"] = 5;
+G2L["d"]["BackgroundTransparency"] = 1;
 
-G2L["e"] = Instance.new("TextButton", G2L["d"]);
+G2L["e"] = Instance.new("TextLabel", G2L["d"]);
+G2L["e"]["Interactable"] = false;
+G2L["e"]["ZIndex"] = 5;
 G2L["e"]["BorderSizePixel"] = 0;
-G2L["e"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
-G2L["e"]["AnchorPoint"] = Vector2.new(1, 0.5);
-G2L["e"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["e"]["TextSize"] = 17;
+G2L["e"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["e"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
+G2L["e"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["e"]["BackgroundTransparency"] = 1;
+G2L["e"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["e"]["Size"] = UDim2.new(1, 0, 1, 0);
 G2L["e"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["e"]["Text"] = [[]];
-G2L["e"]["Name"] = [[B_Button]];
-G2L["e"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
+G2L["e"]["Text"] = [[ Unlock All Titans]];
+G2L["e"]["Name"] = [[DescriptionLabel]];
+G2L["e"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
-G2L["f"] = Instance.new("UIStroke", G2L["e"]);
-G2L["f"]["Color"] = Color3.fromRGB(172, 177, 189);
-G2L["f"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["f"] = Instance.new("TextButton", G2L["d"]);
+G2L["f"]["Interactable"] = false;
+G2L["f"]["BorderSizePixel"] = 0;
+G2L["f"]["TextSize"] = 14;
+G2L["f"]["AutoButtonColor"] = false;
+G2L["f"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["f"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
+G2L["f"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["f"]["ZIndex"] = 4;
+G2L["f"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["f"]["Size"] = UDim2.new(0, 220, 0, 25);
+G2L["f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["f"]["Text"] = [[]];
+G2L["f"]["Name"] = [[Button]];
+G2L["f"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
-G2L["10"] = Instance.new("Frame", G2L["e"]);
-G2L["10"]["Visible"] = false;
-G2L["10"]["ZIndex"] = 2;
-G2L["10"]["BorderSizePixel"] = 0;
-G2L["10"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
-G2L["10"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["10"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
-G2L["10"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
-G2L["10"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["10"]["Name"] = [[Toggle]];
+G2L["10"] = Instance.new("UICorner", G2L["f"]);
+G2L["10"]["CornerRadius"] = UDim.new(0.1, 0);
 
-G2L["11"] = Instance.new("ImageLabel", G2L["e"]);
-G2L["11"]["ZIndex"] = 2;
-G2L["11"]["BorderSizePixel"] = 0;
-G2L["11"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["11"]["ImageTransparency"] = 0.39;
-G2L["11"]["ImageColor3"] = Color3.fromRGB(51, 51, 51);
-G2L["11"]["Image"] = [[rbxassetid://18720640102]];
-G2L["11"]["Size"] = UDim2.new(1, 0, 1, 0);
-G2L["11"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["11"]["BackgroundTransparency"] = 1;
-G2L["11"]["Name"] = [[Vignette]];
+G2L["11"] = Instance.new("LocalScript", G2L["f"]);
 
-G2L["12"] = Instance.new("LocalScript", G2L["e"]);
+G2L["12"] = Instance.new("Frame", G2L["3"]);
+G2L["12"]["ZIndex"] = 3;
+G2L["12"]["BorderSizePixel"] = 0;
+G2L["12"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["12"]["Size"] = UDim2.new(1, 0, 0, 31);
+G2L["12"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["12"]["Name"] = [[Template]];
+G2L["12"]["LayoutOrder"] = 6;
+G2L["12"]["BackgroundTransparency"] = 1;
 
-G2L["13"] = Instance.new("TextLabel", G2L["3"]);
-G2L["13"]["ZIndex"] = 3;
+G2L["13"] = Instance.new("TextLabel", G2L["12"]);
+G2L["13"]["Interactable"] = false;
+G2L["13"]["ZIndex"] = 5;
+G2L["13"]["BorderSizePixel"] = 0;
 G2L["13"]["TextSize"] = 17;
-G2L["13"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["13"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["13"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
 G2L["13"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["13"]["BackgroundTransparency"] = 1;
-G2L["13"]["Size"] = UDim2.new(1, 0, 0, 31);
-G2L["13"]["Text"] = [[ Infinite Jump]];
-G2L["13"]["LayoutOrder"] = 4;
-G2L["13"]["Name"] = [[InfJump_Text]];
+G2L["13"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["13"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["13"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["13"]["Text"] = [[ Unlock All Skins]];
+G2L["13"]["Name"] = [[DescriptionLabel]];
+G2L["13"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
-G2L["14"] = Instance.new("TextButton", G2L["13"]);
+G2L["14"] = Instance.new("TextButton", G2L["12"]);
+G2L["14"]["Interactable"] = false;
 G2L["14"]["BorderSizePixel"] = 0;
+G2L["14"]["TextSize"] = 14;
+G2L["14"]["AutoButtonColor"] = false;
+G2L["14"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
 G2L["14"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
-G2L["14"]["AnchorPoint"] = Vector2.new(1, 0.5);
-G2L["14"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["14"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["14"]["ZIndex"] = 4;
+G2L["14"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["14"]["Size"] = UDim2.new(0, 220, 0, 25);
 G2L["14"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
 G2L["14"]["Text"] = [[]];
-G2L["14"]["Name"] = [[B_Button]];
-G2L["14"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
+G2L["14"]["Name"] = [[Button]];
+G2L["14"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
-G2L["15"] = Instance.new("UIStroke", G2L["14"]);
-G2L["15"]["Color"] = Color3.fromRGB(172, 177, 189);
-G2L["15"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["15"] = Instance.new("UICorner", G2L["14"]);
+G2L["15"]["CornerRadius"] = UDim.new(0.1, 0);
 
-G2L["16"] = Instance.new("Frame", G2L["14"]);
-G2L["16"]["Visible"] = false;
-G2L["16"]["ZIndex"] = 2;
-G2L["16"]["BorderSizePixel"] = 0;
-G2L["16"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
-G2L["16"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["16"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
-G2L["16"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
-G2L["16"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["16"]["Name"] = [[Toggle]];
+G2L["16"] = Instance.new("LocalScript", G2L["14"]);
 
-G2L["17"] = Instance.new("ImageLabel", G2L["14"]);
-G2L["17"]["ZIndex"] = 2;
+G2L["17"] = Instance.new("Frame", G2L["3"]);
+G2L["17"]["ZIndex"] = 3;
 G2L["17"]["BorderSizePixel"] = 0;
 G2L["17"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["17"]["ImageTransparency"] = 0.39;
-G2L["17"]["ImageColor3"] = Color3.fromRGB(51, 51, 51);
-G2L["17"]["Image"] = [[rbxassetid://18720640102]];
-G2L["17"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["17"]["Size"] = UDim2.new(1, 0, 0, 31);
 G2L["17"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["17"]["Name"] = [[Template]];
+G2L["17"]["LayoutOrder"] = 1;
 G2L["17"]["BackgroundTransparency"] = 1;
-G2L["17"]["Name"] = [[Vignette]];
 
-G2L["18"] = Instance.new("LocalScript", G2L["14"]);
+G2L["18"] = Instance.new("TextLabel", G2L["17"]);
+G2L["18"]["Interactable"] = false;
+G2L["18"]["ZIndex"] = 4;
+G2L["18"]["BorderSizePixel"] = 0;
+G2L["18"]["TextSize"] = 17;
+G2L["18"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["18"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["18"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
+G2L["18"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["18"]["BackgroundTransparency"] = 1;
+G2L["18"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["18"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["18"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["18"]["Text"] = [[ Infinite Shards]];
+G2L["18"]["Name"] = [[DescriptionLabel]];
+G2L["18"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
-G2L["19"] = Instance.new("TextLabel", G2L["3"]);
-G2L["19"]["ZIndex"] = 3;
-G2L["19"]["TextSize"] = 17;
-G2L["19"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["19"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
-G2L["19"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["19"]["BackgroundTransparency"] = 1;
-G2L["19"]["Size"] = UDim2.new(1, 0, 0, 31);
-G2L["19"]["Text"] = [[ Walk Speed (75)]];
-G2L["19"]["LayoutOrder"] = 5;
-G2L["19"]["Name"] = [[WalkSpeed_Text]];
+G2L["19"] = Instance.new("TextButton", G2L["17"]);
+G2L["19"]["BorderSizePixel"] = 0;
+G2L["19"]["TextSize"] = 14;
+G2L["19"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["19"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
+G2L["19"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["19"]["ZIndex"] = 4;
+G2L["19"]["AnchorPoint"] = Vector2.new(1, 0.5);
+G2L["19"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["19"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["19"]["Text"] = [[]];
+G2L["19"]["Name"] = [[Button]];
+G2L["19"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
 
-G2L["1a"] = Instance.new("TextButton", G2L["19"]);
+G2L["1a"] = Instance.new("Frame", G2L["19"]);
+G2L["1a"]["Visible"] = false;
+G2L["1a"]["Interactable"] = false;
+G2L["1a"]["ZIndex"] = 5;
 G2L["1a"]["BorderSizePixel"] = 0;
-G2L["1a"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
-G2L["1a"]["AnchorPoint"] = Vector2.new(1, 0.5);
-G2L["1a"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["1a"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
+G2L["1a"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["1a"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
+G2L["1a"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 G2L["1a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["1a"]["Text"] = [[]];
-G2L["1a"]["Name"] = [[B_Button]];
-G2L["1a"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
+G2L["1a"]["Name"] = [[ToggleFrame]];
 
-G2L["1b"] = Instance.new("UIStroke", G2L["1a"]);
+G2L["1b"] = Instance.new("UIStroke", G2L["19"]);
 G2L["1b"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["1b"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
 
-G2L["1c"] = Instance.new("Frame", G2L["1a"]);
-G2L["1c"]["Visible"] = false;
-G2L["1c"]["ZIndex"] = 2;
-G2L["1c"]["BorderSizePixel"] = 0;
-G2L["1c"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
-G2L["1c"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["1c"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
-G2L["1c"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
-G2L["1c"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["1c"]["Name"] = [[Toggle]];
+G2L["1c"] = Instance.new("LocalScript", G2L["19"]);
 
-G2L["1d"] = Instance.new("ImageLabel", G2L["1a"]);
-G2L["1d"]["ZIndex"] = 2;
+G2L["1d"] = Instance.new("Frame", G2L["3"]);
+G2L["1d"]["ZIndex"] = 3;
 G2L["1d"]["BorderSizePixel"] = 0;
 G2L["1d"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["1d"]["ImageTransparency"] = 0.39;
-G2L["1d"]["ImageColor3"] = Color3.fromRGB(51, 51, 51);
-G2L["1d"]["Image"] = [[rbxassetid://18720640102]];
-G2L["1d"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["1d"]["Size"] = UDim2.new(1, 0, 0, 31);
 G2L["1d"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["1d"]["Name"] = [[Template]];
+G2L["1d"]["LayoutOrder"] = 4;
 G2L["1d"]["BackgroundTransparency"] = 1;
-G2L["1d"]["Name"] = [[Vignette]];
 
-G2L["1e"] = Instance.new("LocalScript", G2L["1a"]);
+G2L["1e"] = Instance.new("TextLabel", G2L["1d"]);
+G2L["1e"]["Interactable"] = false;
+G2L["1e"]["ZIndex"] = 4;
+G2L["1e"]["BorderSizePixel"] = 0;
+G2L["1e"]["TextSize"] = 17;
+G2L["1e"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["1e"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["1e"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
+G2L["1e"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["1e"]["BackgroundTransparency"] = 1;
+G2L["1e"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["1e"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["1e"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["1e"]["Text"] = [[ Spam Roar 1 (fast ult)]];
+G2L["1e"]["Name"] = [[DescriptionLabel]];
+G2L["1e"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
-G2L["1f"] = Instance.new("TextLabel", G2L["3"]);
-G2L["1f"]["ZIndex"] = 3;
-G2L["1f"]["TextSize"] = 17;
-G2L["1f"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["1f"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
-G2L["1f"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["1f"]["BackgroundTransparency"] = 1;
-G2L["1f"]["Size"] = UDim2.new(1, 0, 0, 31);
-G2L["1f"]["Text"] = [[ ESP]];
-G2L["1f"]["LayoutOrder"] = 2;
-G2L["1f"]["Name"] = [[ESP_Text]];
+G2L["1f"] = Instance.new("TextButton", G2L["1d"]);
+G2L["1f"]["BorderSizePixel"] = 0;
+G2L["1f"]["TextSize"] = 14;
+G2L["1f"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["1f"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
+G2L["1f"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["1f"]["ZIndex"] = 4;
+G2L["1f"]["AnchorPoint"] = Vector2.new(1, 0.5);
+G2L["1f"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["1f"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["1f"]["Text"] = [[]];
+G2L["1f"]["Name"] = [[Button]];
+G2L["1f"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
 
-G2L["20"] = Instance.new("TextButton", G2L["1f"]);
+G2L["20"] = Instance.new("Frame", G2L["1f"]);
+G2L["20"]["Visible"] = false;
+G2L["20"]["Interactable"] = false;
+G2L["20"]["ZIndex"] = 5;
 G2L["20"]["BorderSizePixel"] = 0;
-G2L["20"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
-G2L["20"]["AnchorPoint"] = Vector2.new(1, 0.5);
-G2L["20"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["20"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
+G2L["20"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["20"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
+G2L["20"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 G2L["20"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["20"]["Text"] = [[]];
-G2L["20"]["Name"] = [[B_Button]];
-G2L["20"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
+G2L["20"]["Name"] = [[ToggleFrame]];
 
-G2L["21"] = Instance.new("UIStroke", G2L["20"]);
+G2L["21"] = Instance.new("UIStroke", G2L["1f"]);
 G2L["21"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["21"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
 
-G2L["22"] = Instance.new("Frame", G2L["20"]);
-G2L["22"]["Visible"] = false;
-G2L["22"]["ZIndex"] = 2;
-G2L["22"]["BorderSizePixel"] = 0;
-G2L["22"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
-G2L["22"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["22"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
-G2L["22"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
-G2L["22"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["22"]["Name"] = [[Toggle]];
+G2L["22"] = Instance.new("LocalScript", G2L["1f"]);
 
-G2L["23"] = Instance.new("ImageLabel", G2L["20"]);
-G2L["23"]["ZIndex"] = 2;
+G2L["23"] = Instance.new("Frame", G2L["3"]);
+G2L["23"]["ZIndex"] = 3;
 G2L["23"]["BorderSizePixel"] = 0;
 G2L["23"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["23"]["ImageTransparency"] = 0.39;
-G2L["23"]["ImageColor3"] = Color3.fromRGB(51, 51, 51);
-G2L["23"]["Image"] = [[rbxassetid://18720640102]];
-G2L["23"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["23"]["Size"] = UDim2.new(1, 0, 0, 31);
 G2L["23"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["23"]["Name"] = [[Template]];
+G2L["23"]["LayoutOrder"] = 2;
 G2L["23"]["BackgroundTransparency"] = 1;
-G2L["23"]["Name"] = [[Vignette]];
 
-G2L["24"] = Instance.new("LocalScript", G2L["20"]);
+G2L["24"] = Instance.new("TextLabel", G2L["23"]);
+G2L["24"]["Interactable"] = false;
+G2L["24"]["ZIndex"] = 4;
+G2L["24"]["BorderSizePixel"] = 0;
+G2L["24"]["TextSize"] = 17;
+G2L["24"]["TextXAlignment"] = Enum.TextXAlignment.Left;
+G2L["24"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["24"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
+G2L["24"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["24"]["BackgroundTransparency"] = 1;
+G2L["24"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["24"]["Size"] = UDim2.new(1, 0, 1, 0);
+G2L["24"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["24"]["Text"] = [[ Spam Roar 2 (fast ult)]];
+G2L["24"]["Name"] = [[DescriptionLabel]];
+G2L["24"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
-G2L["25"] = Instance.new("TextLabel", G2L["3"]);
-G2L["25"]["ZIndex"] = 3;
-G2L["25"]["TextSize"] = 17;
-G2L["25"]["TextXAlignment"] = Enum.TextXAlignment.Left;
-G2L["25"]["FontFace"] = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Heavy, Enum.FontStyle.Normal);
-G2L["25"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["25"]["BackgroundTransparency"] = 1;
-G2L["25"]["Size"] = UDim2.new(1, 0, 0, 31);
-G2L["25"]["Text"] = [[ Anti Fall]];
-G2L["25"]["LayoutOrder"] = 6;
-G2L["25"]["Name"] = [[AntiFall_Text]];
+G2L["25"] = Instance.new("TextButton", G2L["23"]);
+G2L["25"]["BorderSizePixel"] = 0;
+G2L["25"]["TextSize"] = 14;
+G2L["25"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["25"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
+G2L["25"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["25"]["ZIndex"] = 4;
+G2L["25"]["AnchorPoint"] = Vector2.new(1, 0.5);
+G2L["25"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["25"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
+G2L["25"]["Text"] = [[]];
+G2L["25"]["Name"] = [[Button]];
+G2L["25"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
 
-G2L["26"] = Instance.new("TextButton", G2L["25"]);
+G2L["26"] = Instance.new("Frame", G2L["25"]);
+G2L["26"]["Visible"] = false;
+G2L["26"]["Interactable"] = false;
+G2L["26"]["ZIndex"] = 5;
 G2L["26"]["BorderSizePixel"] = 0;
-G2L["26"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
-G2L["26"]["AnchorPoint"] = Vector2.new(1, 0.5);
-G2L["26"]["Size"] = UDim2.new(0, 19, 0, 19);
+G2L["26"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
+G2L["26"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["26"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
+G2L["26"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 G2L["26"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["26"]["Text"] = [[]];
-G2L["26"]["Name"] = [[B_Button]];
-G2L["26"]["Position"] = UDim2.new(0.97, 0, 0.5, 0);
+G2L["26"]["Name"] = [[ToggleFrame]];
 
-G2L["27"] = Instance.new("UIStroke", G2L["26"]);
+G2L["27"] = Instance.new("UIStroke", G2L["25"]);
 G2L["27"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["27"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
 
-G2L["28"] = Instance.new("Frame", G2L["26"]);
-G2L["28"]["Visible"] = false;
-G2L["28"]["ZIndex"] = 2;
-G2L["28"]["BorderSizePixel"] = 0;
-G2L["28"]["BackgroundColor3"] = Color3.fromRGB(241, 145, 10);
-G2L["28"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["28"]["Size"] = UDim2.new(0.7, 0, 0.7, 0);
-G2L["28"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
-G2L["28"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["28"]["Name"] = [[Toggle]];
+G2L["28"] = Instance.new("LocalScript", G2L["25"]);
 
-G2L["29"] = Instance.new("ImageLabel", G2L["26"]);
-G2L["29"]["ZIndex"] = 2;
-G2L["29"]["BorderSizePixel"] = 0;
-G2L["29"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["29"]["ImageTransparency"] = 0.39;
-G2L["29"]["ImageColor3"] = Color3.fromRGB(51, 51, 51);
-G2L["29"]["Image"] = [[rbxassetid://18720640102]];
-G2L["29"]["Size"] = UDim2.new(1, 0, 1, 0);
-G2L["29"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-G2L["29"]["BackgroundTransparency"] = 1;
-G2L["29"]["Name"] = [[Vignette]];
+G2L["29"] = Instance.new("LocalScript", G2L["2"]);
+G2L["29"]["Name"] = [[Drag]];
 
-G2L["2a"] = Instance.new("LocalScript", G2L["26"]);
+G2L["2a"] = Instance.new("Frame", G2L["2"]);
+G2L["2a"]["ZIndex"] = 2;
+G2L["2a"]["BackgroundColor3"] = Color3.fromRGB(50, 55, 69);
+G2L["2a"]["Size"] = UDim2.new(1, 0, 0, 40);
+G2L["2a"]["Name"] = [[Decor]];
 
-G2L["2b"] = Instance.new("UIStroke", G2L["2"]);
-G2L["2b"]["Thickness"] = 0.011;
-G2L["2b"]["StrokeSizingMode"] = Enum.StrokeSizingMode.ScaledSize;
-G2L["2b"]["Color"] = Color3.fromRGB(172, 177, 189);
-G2L["2b"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["2b"] = Instance.new("TextLabel", G2L["2"]);
+G2L["2b"]["TextWrapped"] = true;
+G2L["2b"]["ZIndex"] = 3;
+G2L["2b"]["BorderSizePixel"] = 0;
+G2L["2b"]["TextSize"] = 17;
+G2L["2b"]["BackgroundColor3"] = Color3.fromRGB(11, 11, 11);
+G2L["2b"]["FontFace"] = Font.new([[rbxasset://fonts/families/LuckiestGuy.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
+G2L["2b"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
+G2L["2b"]["BackgroundTransparency"] = 1;
+G2L["2b"]["Size"] = UDim2.new(1, 0, 0, 40);
+G2L["2b"]["Text"] = [[AGE OF TITANS]];
+G2L["2b"]["Name"] = [[GameName]];
 
-G2L["2c"] = Instance.new("LocalScript", G2L["2"]);
-G2L["2c"]["Name"] = [[Drag]];
+G2L["2c"] = Instance.new("TextButton", G2L["2"]);
+G2L["2c"]["SizeConstraint"] = Enum.SizeConstraint.RelativeYY;
+G2L["2c"]["Selectable"] = false;
+G2L["2c"]["ZIndex"] = 4;
+G2L["2c"]["AnchorPoint"] = Vector2.new(1, 0);
+G2L["2c"]["BackgroundTransparency"] = 1;
+G2L["2c"]["Size"] = UDim2.new(0, 40, 0, 40);
+G2L["2c"]["Text"] = [[]];
+G2L["2c"]["Name"] = [[ToggleButton]];
+G2L["2c"]["Position"] = UDim2.new(1, 0, 0, 0);
 
-G2L["2d"] = Instance.new("Frame", G2L["2"]);
-G2L["2d"]["BackgroundColor3"] = Color3.fromRGB(50, 55, 69);
-G2L["2d"]["Size"] = UDim2.new(1, 0, 0, 40);
-G2L["2d"]["Name"] = [[Decor]];
+G2L["2d"] = Instance.new("LocalScript", G2L["2c"]);
+G2L["2d"]["Name"] = [[ToggleUI]];
 
-G2L["2e"] = Instance.new("UICorner", G2L["2d"]);
-G2L["2e"]["CornerRadius"] = UDim.new(0.1, 0);
+G2L["2e"] = Instance.new("ImageLabel", G2L["2c"]);
+G2L["2e"]["ZIndex"] = 5;
+G2L["2e"]["ScaleType"] = Enum.ScaleType.Fit;
+G2L["2e"]["ImageColor3"] = Color3.fromRGB(173, 173, 173);
+G2L["2e"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
+G2L["2e"]["Image"] = [[rbxassetid://114750817054261]];
+G2L["2e"]["Size"] = UDim2.new(0, 11, 0, 11);
+G2L["2e"]["BackgroundTransparency"] = 1;
+G2L["2e"]["Name"] = [[Arrow]];
+G2L["2e"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
 
-G2L["2f"] = Instance.new("UICorner", G2L["2"]);
-G2L["2f"]["CornerRadius"] = UDim.new(0.01, 0);
+G2L["2f"] = Instance.new("UIStroke", G2L["2"]);
+G2L["2f"]["Thickness"] = 2;
+G2L["2f"]["Color"] = Color3.fromRGB(172, 177, 189);
+G2L["2f"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
 
-G2L["30"] = Instance.new("TextLabel", G2L["2"]);
-G2L["30"]["TextWrapped"] = true;
-G2L["30"]["BorderSizePixel"] = 0;
-G2L["30"]["TextSize"] = 17;
-G2L["30"]["BackgroundColor3"] = Color3.fromRGB(11, 11, 11);
-G2L["30"]["FontFace"] = Font.new([[rbxasset://fonts/families/LuckiestGuy.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
-G2L["30"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
-G2L["30"]["BackgroundTransparency"] = 1;
-G2L["30"]["Size"] = UDim2.new(1, 0, 0, 40);
-G2L["30"]["Text"] = [[VOXELS]];
-G2L["30"]["Name"] = [[GameName]];
+G2L["30"] = Instance.new("UIShadow", G2L["2"]);
 
-G2L["31"] = Instance.new("TextButton", G2L["2"]);
-G2L["31"]["SizeConstraint"] = Enum.SizeConstraint.RelativeYY;
-G2L["31"]["Selectable"] = false;
-G2L["31"]["ZIndex"] = 3;
-G2L["31"]["AnchorPoint"] = Vector2.new(1, 0);
-G2L["31"]["BackgroundTransparency"] = 1;
-G2L["31"]["Size"] = UDim2.new(0, 40, 0, 40);
-G2L["31"]["Text"] = [[]];
-G2L["31"]["Name"] = [[ToggleButton]];
-G2L["31"]["Position"] = UDim2.new(1, 0, 0, 0);
-
-G2L["32"] = Instance.new("ImageLabel", G2L["31"]);
-G2L["32"]["ZIndex"] = 4;
-G2L["32"]["ScaleType"] = Enum.ScaleType.Fit;
-G2L["32"]["ImageColor3"] = Color3.fromRGB(145, 145, 145);
-G2L["32"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["32"]["Image"] = [[rbxassetid://4918373417]];
-G2L["32"]["Size"] = UDim2.new(0, 11, 0, 11);
-G2L["32"]["BackgroundTransparency"] = 1;
-G2L["32"]["Rotation"] = 90;
-G2L["32"]["Name"] = [[Arrow]];
-G2L["32"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
-
-G2L["33"] = Instance.new("LocalScript", G2L["31"]);
-G2L["33"]["Name"] = [[ToggleUI]];
-
-local function safeConnect(signal, callback)
-    if signal and signal.Connect then
-        return signal:Connect(callback)
-    end
-end
-
-local function C_b()
-	local script = G2L["b"];
+local function C_c()
+local script = G2L["c"];
+	local MarketplaceService = game:GetService("MarketplaceService")
 	local Players = game:GetService("Players")
-	local ReplicatedStorage = game:GetService("ReplicatedStorage")
-	local RunService = game:GetService("RunService")
-	local Workspace = game:GetService("Workspace")
-
-	local player = Players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-
-	local Remote = ReplicatedStorage:WaitForChild("Systems"):WaitForChild("ActionsSystem"):WaitForChild("Network"):WaitForChild("Attack")
+	local LocalPlayer = Players.LocalPlayer
 
 	local button = script.Parent
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound", true)
-	local toggleFeature = button:WaitForChild("Toggle")
+	local toggleFrame = button:WaitForChild("ToggleFrame")
 
-	local auraRange = 250
-	local attackIndex = 1
-	local hitAmount = 15
-
+	local targetProductId = 3442717108
 	local isRunning = false
-	local isAttacking = false
-
-	toggleFeature.Visible = false
-
-	safeConnect(player.CharacterAdded, function(newChar)
-		character = newChar
-	end)
-
-	local function valid(char)
-		return char
-			and char:FindFirstChild("Humanoid")
-			and char:FindFirstChild("HumanoidRootPart")
-			and char.Humanoid.Health > 0
-	end
-
-	local function getAimedTarget()
-		local currentCharacter = player.Character
-		if not valid(currentCharacter) then return nil end
-
-		local currentRoot = currentCharacter:FindFirstChild("HumanoidRootPart")
-		if not currentRoot then return nil end
-
-		local cam = Workspace.CurrentCamera
-		if not cam then return nil end
-
-		local viewportSize = cam.ViewportSize
-		local screenCenter = Vector2.new(viewportSize.X / 2, viewportSize.Y / 2)
-		local unitRay = cam:ViewportPointToRay(screenCenter.X, screenCenter.Y)
-
-		local raycastParams = RaycastParams.new()
-		raycastParams.FilterDescendantsInstances = {currentCharacter}
-		raycastParams.FilterType = Enum.RaycastFilterType.Exclude
-
-		local result = Workspace:Raycast(unitRay.Origin, unitRay.Direction * auraRange, raycastParams)
-
-		if result and result.Instance then
-			local targetChar = result.Instance.Parent
-			if targetChar and targetChar:FindFirstChild("Humanoid") then
-				local targetPlayer = Players:GetPlayerFromCharacter(targetChar)
-				if targetPlayer and targetPlayer ~= player then
-					if valid(targetChar) then
-						return targetChar
-					end
-				end
-			end
-		end
-
-		return nil
-	end
-
-	local function hit(target)
-		pcall(function()
-			Remote:InvokeServer(target, attackIndex)
-		end)
-		attackIndex = (attackIndex == 1) and 2 or 1
-	end
-
-	local function startAura()
-		isRunning = true
-		toggleFeature.Visible = true
-	end
-
-	local function stopAura()
-		isRunning = false
-		toggleFeature.Visible = false
-		isAttacking = false
-	end
-
-	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isRunning then
-			startAura()
-		else
-			stopAura()
-		end
-	end)
-
-	safeConnect(RunService.Heartbeat, function()
-		if not isRunning or isAttacking then return end
-
-		local target = getAimedTarget()
-		if target then
-			isAttacking = true
-
-			task.spawn(function()
-				for i = 1, hitAmount do
-					if not isRunning then break end
-					
-					local currentTarget = getAimedTarget()
-					
-					if not currentTarget then
-						break
-					end
-					
-					target = currentTarget
-					
-					hit(target)
-					task.wait(0.01)
-				end
-
-				isAttacking = false
-			end)
-		end
-	end)
-end;
-task.spawn(C_b);
-
-local function C_12()
-local script = G2L["12"];
-	local button = script.Parent
-	local toggleFeature = button:WaitForChild("Toggle")
-
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-
-	local Players = game:GetService("Players")
-	local RunService = game:GetService("RunService")
-	local UserInputService = game:GetService("UserInputService")
-
-	local player = Players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-
-	local flySpeed = 60
-	local isFlying = false
-	local flyBodyVelocity, flyBodyGyro, flyRenderConn
-	local flyMove = { forward = 0, backward = 0, left = 0, right = 0, up = 0, down = 0 }
-
-	toggleFeature.Visible = false
-
-	safeConnect(player.CharacterAdded, function(newChar)
-		character = newChar
-		if isFlying then
-			isFlying = false
-			toggleFeature.Visible = false
-			if flyRenderConn then flyRenderConn:Disconnect() flyRenderConn = nil end
-			if flyBodyVelocity then flyBodyVelocity:Destroy() flyBodyVelocity = nil end
-			if flyBodyGyro then flyBodyGyro:Destroy() flyBodyGyro = nil end
-		end
-	end)
-
-	local function stopFly()
-		isFlying = false
-		toggleFeature.Visible = false
-		if flyRenderConn then flyRenderConn:Disconnect() flyRenderConn = nil end
-		if flyBodyVelocity then flyBodyVelocity:Destroy() flyBodyVelocity = nil end
-		if flyBodyGyro then flyBodyGyro:Destroy() flyBodyGyro = nil end
-
-		if character then
-			local hum = character:FindFirstChildWhichIsA("Humanoid")
-			if hum then hum.PlatformStand = false end
-		end
-		flyMove = { forward = 0, backward = 0, left = 0, right = 0, up = 0, down = 0 }
-	end
-
-	local function startFly()
-		if not character then return end
-		local hum = character:FindFirstChildWhichIsA("Humanoid")
-		local hrp = character:FindFirstChild("HumanoidRootPart")
-		if not hum or not hrp then return end
-
-		isFlying = true
-		toggleFeature.Visible = true
-		hum.PlatformStand = true
-
-		flyBodyGyro = Instance.new("BodyGyro")
-		flyBodyGyro.P = 9e4
-		flyBodyGyro.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
-		flyBodyGyro.CFrame = hrp.CFrame
-		flyBodyGyro.Parent = hrp
-
-		flyBodyVelocity = Instance.new("BodyVelocity")
-		flyBodyVelocity.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-		flyBodyVelocity.Velocity = Vector3.zero
-		flyBodyVelocity.Parent = hrp
-
-		flyRenderConn = safeConnect(RunService.RenderStepped, function()
-			if not isFlying then return end
-			if not character or not character.Parent or hum.Health <= 0 then
-				stopFly()
-				return
-			end
-
-			local cam = workspace.CurrentCamera
-			if not cam or not hrp.Parent then return end
-
-			local direction =
-				(cam.CFrame.LookVector * (flyMove.forward - flyMove.backward)) +
-				(cam.CFrame.RightVector * (flyMove.right - flyMove.left)) +
-				(Vector3.new(0, 1, 0) * (flyMove.up - flyMove.down))
-
-			if direction.Magnitude > 0 then direction = direction.Unit end
-			flyBodyVelocity.Velocity = direction * (flySpeed * 3)
-			flyBodyGyro.CFrame = cam.CFrame
-		end)
-	end
-
-	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isFlying then
-			startFly()
-		else
-			stopFly()
-		end
-	end)
-
-	safeConnect(UserInputService.InputBegan, function(input, gameProcessed)
-		if gameProcessed then return end
-		if input.KeyCode == Enum.KeyCode.W then flyMove.forward = 1
-		elseif input.KeyCode == Enum.KeyCode.S then flyMove.backward = 1
-		elseif input.KeyCode == Enum.KeyCode.A then flyMove.left = 1
-		elseif input.KeyCode == Enum.KeyCode.D then flyMove.right = 1
-		elseif input.KeyCode == Enum.KeyCode.Space then flyMove.up = 1
-		elseif input.KeyCode == Enum.KeyCode.LeftControl then flyMove.down = 1
-		end
-	end)
-
-	safeConnect(UserInputService.InputEnded, function(input)
-		if input.KeyCode == Enum.KeyCode.W then flyMove.forward = 0
-		elseif input.KeyCode == Enum.KeyCode.S then flyMove.backward = 0
-		elseif input.KeyCode == Enum.KeyCode.A then flyMove.left = 0
-		elseif input.KeyCode == Enum.KeyCode.D then flyMove.right = 0
-		elseif input.KeyCode == Enum.KeyCode.Space then flyMove.up = 0
-		elseif input.KeyCode == Enum.KeyCode.LeftControl then flyMove.down = 0
-		end
-	end)
-end;
-task.spawn(C_12);
-
-local function C_18()
-local script = G2L["18"];
-	local button = script.Parent
-	local toggleFeature = button:WaitForChild("Toggle")
-
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-
-	local Players = game:GetService("Players")
-	local UserInputService = game:GetService("UserInputService")
-
-	local player = Players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-
-	local isInfJumpEnabled = false
-	local jumpConnection
-
-	toggleFeature.Visible = false
-
-	safeConnect(player.CharacterAdded, function(newChar)
-		character = newChar
-	end)
-
-	local function startInfJump()
-		isInfJumpEnabled = true
-		toggleFeature.Visible = true
-
-		if jumpConnection then jumpConnection:Disconnect() end
-
-		local humanoid = character:WaitForChild("Humanoid")
-		jumpConnection = safeConnect(humanoid.Jumping, function()
-			if isInfJumpEnabled and character then
-				local hrp = character:FindFirstChild("HumanoidRootPart")
-				if hrp then
-					hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, 50, hrp.AssemblyLinearVelocity.Z)
-				end
-			end
-		end)
-	end
-
-	local function stopInfJump()
-		isInfJumpEnabled = false
-		toggleFeature.Visible = false
-		if jumpConnection then
-			jumpConnection:Disconnect()
-			jumpConnection = nil
-		end
-	end
-
-	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isInfJumpEnabled then
-			startInfJump()
-		else
-			stopInfJump()
-		end
-	end)
-
-	safeConnect(UserInputService.JumpRequest, function()
-		if isInfJumpEnabled and character then
-			local hrp = character:FindFirstChild("HumanoidRootPart")
-			if hrp then
-				hrp.AssemblyLinearVelocity = Vector3.new(hrp.AssemblyLinearVelocity.X, 50, hrp.AssemblyLinearVelocity.Z)
-			end
-		end
-	end)
-end;
-task.spawn(C_18);
-
-local function C_1e()
-local script = G2L["1e"];
-	local button = script.Parent
-	local toggleFeature = button:WaitForChild("Toggle")
-
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-
-	local Players = game:GetService("Players")
-	local RunService = game:GetService("RunService")
-
-	local player = Players.LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-
-	local walkSpeed = 75
-	local originalWalkSpeed = nil
-	local isSpeedEnabled = false
-	local speedConn
-
-	toggleFeature.Visible = false
-
-	safeConnect(player.CharacterAdded, function(newChar)
-		character = newChar
-		if isSpeedEnabled then
-			if speedConn then speedConn:Disconnect() end
-			local hum = character:WaitForChild("Humanoid")
-			hum.WalkSpeed = walkSpeed
-			speedConn = safeConnect(RunService.Heartbeat, function()
-				if character and character:FindFirstChild("Humanoid") and character.Humanoid.WalkSpeed ~= walkSpeed then
-					character.Humanoid.WalkSpeed = walkSpeed
-				end
-			end)
-		end
-	end)
-
-	local function startSpeed()
-		if not character then return end
-		local hum = character:FindFirstChildWhichIsA("Humanoid")
-		if not hum then return end
-
-		isSpeedEnabled = true
-		toggleFeature.Visible = true
-
-		originalWalkSpeed = hum.WalkSpeed
-		hum.WalkSpeed = walkSpeed
-
-		if speedConn then speedConn:Disconnect() end
-		speedConn = safeConnect(RunService.Heartbeat, function()
-			if isSpeedEnabled and character and character:FindFirstChild("Humanoid") then
-				if character.Humanoid.WalkSpeed ~= walkSpeed then
-					character.Humanoid.WalkSpeed = walkSpeed
-				end
-			end
-		end)
-	end
-
-	local function stopSpeed()
-		isSpeedEnabled = false
-		toggleFeature.Visible = false
-		if speedConn then
-			speedConn:Disconnect()
-			speedConn = nil
-		end
-
-		if character then
-			local hum = character:FindFirstChildWhichIsA("Humanoid")
-			if hum and originalWalkSpeed then
-				hum.WalkSpeed = originalWalkSpeed
-			end
-		end
-	end
-
-	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isSpeedEnabled then
-			startSpeed()
-		else
-			stopSpeed()
-		end
-	end)
-end;
-task.spawn(C_1e);
-
-local function C_24()
-	local script = G2L["24"];
-	local button = script.Parent
-	local toggleFeature = button:WaitForChild("Toggle")
-
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-
-	local Players = game:GetService("Players")
-	local player = Players.LocalPlayer
-
-	local isEspEnabled = false
-	local espHighlights = {}
-	local connections = {}
-
-	toggleFeature.Visible = false
-
-	local function removeESP(char)
-		if espHighlights[char] then
-			espHighlights[char]:Destroy()
-			espHighlights[char] = nil
-		end
-	end
-
-	local function clearAllESP()
-		for char, _ in pairs(espHighlights) do
-			removeESP(char)
-		end
-		espHighlights = {}
-	end
-
-	local function applyESP(char)
-		if not char or not char:FindFirstChild("HumanoidRootPart") then return end
-		if espHighlights[char] then return end
-
-		local highlight = Instance.new("Highlight")
-		highlight.Name = "VoxelESP"
-		highlight.Adornee = char
-		highlight.FillColor = Color3.fromRGB(255, 0, 0)
-		highlight.OutlineColor = Color3.fromRGB(255, 80, 80)
-		highlight.FillTransparency = 0.65
-		highlight.OutlineTransparency = 0
-		highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-		highlight.Parent = char
-
-		espHighlights[char] = highlight
-	end
-
-	local function updatePlayer(p)
-		if p ~= player then
-			if p.Character and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
-				applyESP(p.Character)
-			else
-				if p.Character then removeESP(p.Character) end
-			end
-		end
-	end
-
-	local function setupPlayer(p)
-		local conn = safeConnect(p.CharacterAdded, function(char)
-			task.wait(0.5)
-			if isEspEnabled then
-				updatePlayer(p)
-			end
-		end)
-		table.insert(connections, conn)
-
-		if p.Character and isEspEnabled then
-			updatePlayer(p)
-		end
-	end
-
-	local function startESP()
-		isEspEnabled = true
-		toggleFeature.Visible = true
-
-		for _, p in ipairs(Players:GetPlayers()) do
-			updatePlayer(p)
-		end
-	end
-
-	local function stopESP()
-		isEspEnabled = false
-		toggleFeature.Visible = false
-		clearAllESP()
-	end
-
-	for _, p in ipairs(Players:GetPlayers()) do
-		setupPlayer(p)
-	end
-
-	safeConnect(Players.PlayerAdded, function(p)
-		setupPlayer(p)
-	end)
-
-	safeConnect(Players.PlayerRemoving, function(leavingPlayer)
-		if leavingPlayer.Character then
-			removeESP(leavingPlayer.Character)
-		end
-	end)
-
-	safeConnect(button.Activated, function()
-		if clickSound then
-			clickSound:Play()
-		end
-
-		if not isEspEnabled then
-			startESP()
-		else
-			stopESP()
-		end
-	end)
-end;
-task.spawn(C_24);
-
-local function C_2a()
-local script = G2L["2a"];
-	local button = script.Parent
-	local toggleFeature = button:WaitForChild("Toggle")
-
-	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
-	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
-
-	local isAntiFallActive = false
-
-	toggleFeature.Visible = false
-
-	local rawget = getrawmetatable(game)
-	local oldNamecall = rawget.__namecall
-	setreadonly(rawget, false)
-
-	rawget.__namecall = newcclosure(function(self, ...)
-		local method = getnamecallmethod()
-
-		if isAntiFallActive and method == "FireServer" and tostring(self) == "FallDamage" then
-			return nil
-		end
-
-		return oldNamecall(self, ...)
-	end)
-
-	setreadonly(rawget, true)
 
 	button.Activated:Connect(function()
-		if clickSound then
-			clickSound:Play()
-		end
 
-		isAntiFallActive = not isAntiFallActive
-		toggleFeature.Visible = isAntiFallActive
+		toggleFrame.Visible = not toggleFrame.Visible
+
+		isRunning = toggleFrame.Visible
+
+		if isRunning then
+			task.spawn(function()
+				while isRunning do
+					pcall(function()
+						MarketplaceService:SignalPromptProductPurchaseFinished(LocalPlayer.UserId, targetProductId, true)
+					end)
+
+					task.wait(0.1)
+				end
+			end)
+		end
 	end)
 end;
-task.spawn(C_2a);
+task.spawn(C_c);
 
-local function C_2c()
-local script = G2L["2c"];
+local function C_11()
+local script = G2L["11"];
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+
+	local button = script.Parent
+
+	button.Activated:Connect(function()
+		if not LocalPlayer then return end
+
+		local kaijusFolder = LocalPlayer:FindFirstChild("Kaijus")
+
+		if kaijusFolder then
+			for _, item in ipairs(kaijusFolder:GetChildren()) do
+				if item:IsA("BoolValue") then
+					if not item.Value then
+						item.Value = true
+					end
+				end
+			end
+		end
+	end)
+end;
+task.spawn(C_11);
+
+local function C_16()
+local script = G2L["16"];
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+
+	local button = script.Parent
+
+	button.Activated:Connect(function()
+		if not LocalPlayer then return end
+
+		local kaijusFolder = LocalPlayer:FindFirstChild("Kaijus")
+		if kaijusFolder then
+			for _, kaiju in ipairs(kaijusFolder:GetChildren()) do
+				if kaiju:IsA("BoolValue") then
+					local skinsFolder = kaiju:FindFirstChild("Skins")
+					if skinsFolder then
+						for _, skin in ipairs(skinsFolder:GetChildren()) do
+							if skin:IsA("BoolValue") then
+								if not skin.Value then
+									skin.Value = true
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end)
+end;
+task.spawn(C_16);
+
+local function C_1c()
+local script = G2L["1c"];
+	local MarketplaceService = game:GetService("MarketplaceService")
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+
+	local button = script.Parent
+	local toggleFrame = button:WaitForChild("ToggleFrame")
+
+	local targetProductId = 3539271502
+	local isRunning = false
+
+	button.Activated:Connect(function()
+
+		toggleFrame.Visible = not toggleFrame.Visible
+
+		isRunning = toggleFrame.Visible
+
+		if isRunning then
+			task.spawn(function()
+				while isRunning do
+					pcall(function()
+						MarketplaceService:SignalPromptProductPurchaseFinished(LocalPlayer.UserId, targetProductId, true)
+					end)
+
+					task.wait(0.1)
+				end
+			end)
+		end
+	end)
+end;
+task.spawn(C_1c);
+
+local function C_22()
+local script = G2L["22"];
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+
+	local button = script.Parent
+	local toggleFrame = button:WaitForChild("ToggleFrame")
+
+	local isRunning = false
+
+	button.Activated:Connect(function()
+		if not LocalPlayer then return end
+
+		toggleFrame.Visible = not toggleFrame.Visible
+		isRunning = toggleFrame.Visible
+
+		if isRunning then
+			task.spawn(function()
+				while isRunning do
+					local character = LocalPlayer.Character
+					if character then
+						local remoteEvent = character:FindFirstChild("RemoteEvent")
+						if remoteEvent then
+							pcall(function()
+								remoteEvent:FireServer("Roar1", 5)
+							end)
+						end
+					end
+					task.wait(0.1)
+				end
+			end)
+		end
+	end)
+end;
+task.spawn(C_22);
+
+local function C_28()
+local script = G2L["28"];
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+
+	local button = script.Parent
+	local toggleFrame = button:WaitForChild("ToggleFrame")
+
+	local isRunning = false
+
+	button.Activated:Connect(function()
+		if not LocalPlayer then return end
+
+		toggleFrame.Visible = not toggleFrame.Visible
+		isRunning = toggleFrame.Visible
+
+		if isRunning then
+			task.spawn(function()
+				while isRunning do
+					local character = LocalPlayer.Character
+					if character then
+						local remoteEvent = character:FindFirstChild("RemoteEvent")
+						if remoteEvent then
+							pcall(function()
+								remoteEvent:FireServer("Roar2", 3.6666667461395)
+							end)
+						end
+					end
+					task.wait(0.1)
+				end
+			end)
+		end
+	end)
+end;
+task.spawn(C_28);
+
+local function C_29()
+local script = G2L["29"];
 	local UserInputService = game:GetService("UserInputService")
 
 	local MainFrame = script.Parent
@@ -1028,13 +671,13 @@ local script = G2L["2c"];
 		)
 	end
 
-	safeConnect(MainFrame.InputBegan, function(input)
+	MainFrame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
 			startPos = MainFrame.Position
 
-			safeConnect(input.Changed, function()
+			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
 					dragging = false
 				end
@@ -1042,22 +685,22 @@ local script = G2L["2c"];
 		end
 	end)
 
-	safeConnect(MainFrame.InputChanged, function(input)
+	MainFrame.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
 	end)
 
-	safeConnect(UserInputService.InputChanged, function(input)
+	UserInputService.InputChanged:Connect(function(input)
 		if input == dragInput and dragging then
 			update(input)
 		end
 	end)
 end;
-task.spawn(C_2c);
+task.spawn(C_29);
 
-local function C_33()
-local script = G2L["33"];
+local function C_2d()
+local script = G2L["2d"];
 	local scriptButton = script.Parent
 	local Main = scriptButton.Parent
 	local Arrow = scriptButton:FindFirstChild("Arrow")
@@ -1066,7 +709,7 @@ local script = G2L["33"];
 	local defaultSize = Main.Size
 	local targetSize = UDim2.new(0, 230, 0, 40)
 	local defaultRotation = Arrow and Arrow.Rotation or 0
-	local targetRotation = 180
+	local targetRotation = 90
 	local isExpanded = false
 
 	local tweenInfo = TweenInfo.new(
@@ -1075,7 +718,7 @@ local script = G2L["33"];
 		Enum.EasingDirection.Out
 	)
 
-	safeConnect(scriptButton.Activated, function()
+	scriptButton.Activated:Connect(function()
 		local newSize
 		local newRotation
 		if isExpanded then
@@ -1097,6 +740,6 @@ local script = G2L["33"];
 		end
 	end)
 end;
-task.spawn(C_33);
+task.spawn(C_2d);
 
 return G2L["1"], require;

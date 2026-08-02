@@ -25,10 +25,6 @@ clickSound.Name = "UIClickSound"
 clickSound.SoundId = "rbxassetid://93927627634818"
 clickSound.Volume = 0.5
 
-task.spawn(function()
-	game:GetService("ContentProvider"):PreloadAsync({clickSound})
-end)
-
 G2L["2"] = Instance.new("Frame", G2L["1"]);
 G2L["2"]["Active"] = true;
 G2L["2"]["BackgroundColor3"] = Color3.fromRGB(35, 39, 48);

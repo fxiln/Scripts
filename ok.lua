@@ -17,7 +17,7 @@ end)
 
 local G2L = {};
 
-G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"));
+G2L["1"] = Instance.new("ScreenGui", game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"));
 G2L["1"]["Name"] = [[KoyaScript]];
 
 local clickSound = Instance.new("Sound", G2L["1"])
@@ -158,7 +158,6 @@ G2L["e"]["Name"] = [[DescriptionLabel]];
 G2L["e"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
 
 G2L["f"] = Instance.new("TextButton", G2L["d"]);
-G2L["f"]["Interactable"] = false;
 G2L["f"]["BorderSizePixel"] = 0;
 G2L["f"]["TextSize"] = 14;
 G2L["f"]["AutoButtonColor"] = false;
@@ -208,7 +207,6 @@ G2L["14"] = Instance.new("TextButton", G2L["12"]);
 G2L["14"]["Interactable"] = false;
 G2L["14"]["BorderSizePixel"] = 0;
 G2L["14"]["TextSize"] = 14;
-G2L["14"]["AutoButtonColor"] = false;
 G2L["14"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
 G2L["14"]["BackgroundColor3"] = Color3.fromRGB(55, 62, 72);
 G2L["14"]["FontFace"] = Font.new([[rbxasset://fonts/families/SourceSansPro.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
@@ -443,9 +441,10 @@ G2L["2e"]["ZIndex"] = 5;
 G2L["2e"]["ScaleType"] = Enum.ScaleType.Fit;
 G2L["2e"]["ImageColor3"] = Color3.fromRGB(173, 173, 173);
 G2L["2e"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
-G2L["2e"]["Image"] = [[rbxassetid://114750817054261]];
+G2L["2e"]["Image"] = [[rbxassetid://4918373417]];
 G2L["2e"]["Size"] = UDim2.new(0, 11, 0, 11);
 G2L["2e"]["BackgroundTransparency"] = 1;
+G2L["2e"]["Rotation"] = 90;
 G2L["2e"]["Name"] = [[Arrow]];
 G2L["2e"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
 
@@ -453,8 +452,6 @@ G2L["2f"] = Instance.new("UIStroke", G2L["2"]);
 G2L["2f"]["Thickness"] = 2;
 G2L["2f"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["2f"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-
-G2L["30"] = Instance.new("UIShadow", G2L["2"]);
 
 local function C_c()
 local script = G2L["c"];
@@ -465,10 +462,16 @@ local script = G2L["c"];
 	local button = script.Parent
 	local toggleFrame = button:WaitForChild("ToggleFrame")
 
+	local screenGui = button:FindFirstAncestorWhichIsA("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
 	local targetProductId = 3442717108
 	local isRunning = false
 
 	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
 
 		toggleFrame.Visible = not toggleFrame.Visible
 
@@ -496,7 +499,14 @@ local script = G2L["11"];
 
 	local button = script.Parent
 
+	local screenGui = button:FindFirstAncestorWhichIsA("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
 	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
+
 		if not LocalPlayer then return end
 
 		local kaijusFolder = LocalPlayer:FindFirstChild("Kaijus")
@@ -521,7 +531,14 @@ local script = G2L["16"];
 
 	local button = script.Parent
 
+	local screenGui = button:FindFirstAncestorWhichIsA("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
 	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
+
 		if not LocalPlayer then return end
 
 		local kaijusFolder = LocalPlayer:FindFirstChild("Kaijus")
@@ -554,10 +571,16 @@ local script = G2L["1c"];
 	local button = script.Parent
 	local toggleFrame = button:WaitForChild("ToggleFrame")
 
+	local screenGui = button:FindFirstAncestorWhichIsA("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
 	local targetProductId = 3539271502
 	local isRunning = false
 
 	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
 
 		toggleFrame.Visible = not toggleFrame.Visible
 
@@ -586,9 +609,16 @@ local script = G2L["22"];
 	local button = script.Parent
 	local toggleFrame = button:WaitForChild("ToggleFrame")
 
+	local screenGui = button:FindFirstAncestorWhichIsA("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
 	local isRunning = false
 
 	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
+
 		if not LocalPlayer then return end
 
 		toggleFrame.Visible = not toggleFrame.Visible
@@ -622,9 +652,16 @@ local script = G2L["28"];
 	local button = script.Parent
 	local toggleFrame = button:WaitForChild("ToggleFrame")
 
+	local screenGui = button:FindFirstAncestorWhichIsA("ScreenGui")
+	local clickSound = screenGui and screenGui:FindFirstChild("UIClickSound")
+
 	local isRunning = false
 
 	button.Activated:Connect(function()
+		if clickSound then
+			clickSound:Play()
+		end
+
 		if not LocalPlayer then return end
 
 		toggleFrame.Visible = not toggleFrame.Visible

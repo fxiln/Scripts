@@ -26,6 +26,15 @@ clickSound.Name = "UIClickSound"
 clickSound.SoundId = "rbxassetid://93927627634818"
 clickSound.Volume = 0.5
 
+G2L["2_Shadow"] = Instance.new("UIShadow", G2L["2"]);
+G2L["2_Shadow"]["Name"] = "UIShadow";
+G2L["2_Shadow"]["BlurRadius"] = UDim.new(0.05, 0);
+G2L["2_Shadow"]["Color"] = Color3.fromRGB(0, 0, 0);
+G2L["2_Shadow"]["Offset"] = UDim2.new(0, 0, 0, 0);
+G2L["2_Shadow"]["Spread"] = UDim2.new(0, 0, 0, 0);
+G2L["2_Shadow"]["Transparency"] = 0.6;
+G2L["2_Shadow"]["ZIndex"] = 0;
+
 G2L["2"] = Instance.new("Frame", G2L["1"]);
 G2L["2"]["Active"] = true;
 G2L["2"]["BackgroundColor3"] = Color3.fromRGB(35, 39, 48);
@@ -35,15 +44,6 @@ G2L["2"]["Size"] = UDim2.new(0, 230, 0, 228);
 G2L["2"]["Position"] = UDim2.new(0.03, -12, 0, 6);
 G2L["2"]["BorderColor3"] = Color3.fromRGB(35, 39, 48);
 G2L["2"]["Name"] = [[MainFrame]];
-
-G2L["2_Shadow"] = Instance.new("UIShadow", G2L["2"]);
-G2L["2_Shadow"]["Name"] = "UIShadow";
-G2L["2_Shadow"]["BlurRadius"] = UDim.new(0.05, 0);
-G2L["2_Shadow"]["Color"] = Color3.fromRGB(0, 0, 0);
-G2L["2_Shadow"]["Offset"] = UDim2.new(0, 0, 0, 0);
-G2L["2_Shadow"]["Spread"] = UDim2.new(0, 0, 0, 0);
-G2L["2_Shadow"]["Transparency"] = 0.6;
-G2L["2_Shadow"]["ZIndex"] = 0;
 
 G2L["3"] = Instance.new("Frame", G2L["2"]);
 G2L["3"]["ZIndex"] = 2;

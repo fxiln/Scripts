@@ -357,9 +357,16 @@ G2L["24"]["Name"] = [[Arrow]];
 G2L["24"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
 
 G2L["25"] = Instance.new("UIStroke", G2L["2"]);
-G2L["25"]["Thickness"] = 2;
-G2L["25"]["Color"] = Color3.fromRGB(172, 177, 189);
+G2L["25"]["Name"] = [[Stroke]];
 G2L["25"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["25"]["BorderOffset"] = UDim2.new(0, 0, 0, 0);
+G2L["25"]["BorderStrokePosition"] = Enum.BorderStrokePosition.Outer;
+G2L["25"]["Color"] = Color3.fromRGB(171, 176, 188);
+G2L["25"]["LineJoinMode"] = Enum.LineJoinMode.Round;
+G2L["25"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;
+G2L["25"]["Thickness"] = 2;
+G2L["25"]["Transparency"] = 0;
+G2L["25"]["ZIndex"] = 1;
 
 local function C_7()
 	local script = G2L["7"];

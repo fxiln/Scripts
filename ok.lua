@@ -244,6 +244,10 @@ G2L["16"]["Name"] = [[ToggleFrame]];
 G2L["17"] = Instance.new("UIStroke", G2L["15"]);
 G2L["17"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["17"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["17"]["LineJoinMode"] = Enum.LineJoinMode.Round;
+G2L["17"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;
+G2L["17"]["Thickness"] = 2;
+G2L["17"]["Name"] = [[Stroke]];
 
 G2L["18"] = Instance.new("Frame", G2L["3"]);
 G2L["18"]["ZIndex"] = 3;
@@ -312,9 +316,12 @@ G2L["1f"] = Instance.new("LocalScript", G2L["2"]);
 G2L["1f"]["Name"] = [[Drag]];
 
 G2L["20"] = Instance.new("Frame", G2L["2"]);
+G2L["20"]["Active"] = true;
 G2L["20"]["ZIndex"] = 2;
 G2L["20"]["BackgroundColor3"] = Color3.fromRGB(50, 55, 69);
+G2L["20"]["AnchorPoint"] = Vector2.new(0.5, 0);
 G2L["20"]["Size"] = UDim2.new(1, 0, 0, 40);
+G2L["20"]["Position"] = UDim2.new(0.5, 0, 0, 0);
 G2L["20"]["Name"] = [[Decor]];
 
 G2L["21"] = Instance.new("TextLabel", G2L["2"]);
@@ -326,9 +333,11 @@ G2L["21"]["BackgroundColor3"] = Color3.fromRGB(11, 11, 11);
 G2L["21"]["FontFace"] = Font.new([[rbxasset://fonts/families/LuckiestGuy.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal);
 G2L["21"]["TextColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["21"]["BackgroundTransparency"] = 1;
+G2L["21"]["AnchorPoint"] = Vector2.new(0.5, 0);
 G2L["21"]["Size"] = UDim2.new(1, 0, 0, 40);
 G2L["21"]["Text"] = [[AGE OF TITANS]];
 G2L["21"]["Name"] = [[GameName]];
+G2L["21"]["Position"] = UDim2.new(0.5, 0, 0, 0);
 
 G2L["22"] = Instance.new("TextButton", G2L["2"]);
 G2L["22"]["SizeConstraint"] = Enum.SizeConstraint.RelativeYY;
@@ -357,19 +366,12 @@ G2L["24"]["Name"] = [[Arrow]];
 G2L["24"]["Position"] = UDim2.new(0.6, 0, 0.5, 0);
 
 G2L["25"] = Instance.new("UIStroke", G2L["2"]);
-G2L["25"]["Name"] = [[Stroke]];
-G2L["25"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-G2L["25"]["BorderOffset"] = UDim2.new(0, 0, 0, 0);
-G2L["25"]["BorderStrokePosition"] = Enum.BorderStrokePosition.Outer;
-G2L["25"]["Color"] = Color3.fromRGB(171, 176, 188);
-G2L["25"]["LineJoinMode"] = Enum.LineJoinMode.Round;
-G2L["25"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;
 G2L["25"]["Thickness"] = 2;
-G2L["25"]["Transparency"] = 0;
-G2L["25"]["ZIndex"] = 1;
+G2L["25"]["Color"] = Color3.fromRGB(172, 177, 189);
+G2L["25"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
 
 local function C_7()
-	local script = G2L["7"];
+local script = G2L["7"];
 	local TweenService = game:GetService("TweenService")
 	local textLabel = script.Parent
 
@@ -406,7 +408,7 @@ end;
 task.spawn(C_7);
 
 local function C_11()
-	local script = G2L["11"];
+local script = G2L["11"];
 	local Players = game:GetService("Players")
 	local MaterialService = game:GetService("MaterialService")
 	local Lighting = game:GetService("Lighting")
@@ -516,7 +518,7 @@ end;
 task.spawn(C_11);
 
 local function C_1d()
-	local script = G2L["1d"];
+local script = G2L["1d"];
 	local Players = game:GetService("Players")
 	local UserInputService = game:GetService("UserInputService")
 	local LocalPlayer = Players.LocalPlayer
@@ -541,6 +543,7 @@ local function C_1d()
 		isRunning = toggleFrame.Visible
 
 		if isRunning then
+
 			jumpConnection = UserInputService.JumpRequest:Connect(function()
 				local character = LocalPlayer.Character
 				if character then
@@ -551,6 +554,7 @@ local function C_1d()
 				end
 			end)
 		else
+
 			if jumpConnection then
 				jumpConnection:Disconnect()
 				jumpConnection = nil
@@ -561,7 +565,7 @@ end;
 task.spawn(C_1d);
 
 local function C_1e()
-	local script = G2L["1e"];
+local script = G2L["1e"];
 	local Players = game:GetService("Players")
 	local Workspace = game:GetService("Workspace")
 	local LocalPlayer = Players.LocalPlayer
@@ -690,7 +694,7 @@ end;
 task.spawn(C_1e);
 
 local function C_1f()
-	local script = G2L["1f"];
+local script = G2L["1f"];
 	local UserInputService = game:GetService("UserInputService")
 
 	local MainFrame = script.Parent
@@ -742,7 +746,7 @@ end;
 task.spawn(C_1f);
 
 local function C_23()
-	local script = G2L["23"];
+local script = G2L["23"];
 	local scriptButton = script.Parent
 	local Main = scriptButton.Parent
 	local Arrow = scriptButton:FindFirstChild("Arrow")

@@ -53,6 +53,7 @@ G2L["3"]["Name"] = [[Container]];
 G2L["3"]["BackgroundTransparency"] = 1;
 
 G2L["4"] = Instance.new("UIListLayout", G2L["3"]);
+G2L["4"]["HorizontalAlignment"] = Enum.HorizontalAlignment.Center;
 G2L["4"]["SortOrder"] = Enum.SortOrder.LayoutOrder;
 
 G2L["5"] = Instance.new("UIPadding", G2L["3"]);
@@ -244,10 +245,6 @@ G2L["16"]["Name"] = [[ToggleFrame]];
 G2L["17"] = Instance.new("UIStroke", G2L["15"]);
 G2L["17"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["17"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-G2L["17"]["LineJoinMode"] = Enum.LineJoinMode.Round;
-G2L["17"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;
-G2L["17"]["Thickness"] = 2;
-G2L["17"]["Name"] = [[Stroke]];
 
 G2L["18"] = Instance.new("Frame", G2L["3"]);
 G2L["18"]["ZIndex"] = 3;
@@ -311,6 +308,7 @@ G2L["1c"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
 G2L["1d"] = Instance.new("LocalScript", G2L["1a"]);
 
 G2L["1e"] = Instance.new("LocalScript", G2L["3"]);
+G2L["1e"]["Name"] = [[TeleportScript]];
 
 G2L["1f"] = Instance.new("LocalScript", G2L["2"]);
 G2L["1f"]["Name"] = [[Drag]];

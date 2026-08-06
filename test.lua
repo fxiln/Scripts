@@ -396,7 +396,7 @@ G2L["27"]["AnchorPoint"] = Vector2.new(0.5, 0);
 G2L["27"]["Size"] = UDim2.new(1, 0, 0, 40);
 G2L["27"]["Text"] = [[+1 Backflip Keyboard Escape]];
 G2L["27"]["Name"] = [[GameName]];
-G2L["27"]["Position"] = UDim2.new(0.5, 0, 0.01, 0);
+G2L["27"]["Position"] = UDim2.new(0.5, 0, 0.03, 0);
 
 G2L["28"] = Instance.new("TextButton", G2L["2"]);
 G2L["28"]["SizeConstraint"] = Enum.SizeConstraint.RelativeYY;

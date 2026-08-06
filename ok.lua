@@ -135,6 +135,7 @@ G2L["b"]["Name"] = [[ToggleFrame]];
 G2L["c"] = Instance.new("UIStroke", G2L["a"]);
 G2L["c"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["c"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["c"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;---------------------------------------------------------------------------------------------------------------------------------------------
 
 G2L["d"] = Instance.new("Frame", G2L["3"]);
 G2L["d"]["ZIndex"] = 3;
@@ -244,7 +245,7 @@ G2L["16"]["Name"] = [[ToggleFrame]];
 G2L["17"] = Instance.new("UIStroke", G2L["15"]);
 G2L["17"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["17"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
-G2L["17"]["LineJoinMode"] = Enum.LineJoinMode.Round;
+G2L["17"]["LineJoinMode"] = Enum.LineJoinMode.Round;-----------------------------------------------------------------------------------------------------------------------------------------------
 G2L["17"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;
 G2L["17"]["Thickness"] = 2;
 G2L["17"]["Name"] = [[Stroke]];
@@ -307,6 +308,11 @@ G2L["1b"]["Name"] = [[ToggleFrame]];
 G2L["1c"] = Instance.new("UIStroke", G2L["1a"]);
 G2L["1c"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["1c"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["1c"]["LineJoinMode"] = Enum.LineJoinMode.Round;-----------------------------------------------------------------------------------------------------------------------------------------------
+G2L["1c"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;
+G2L["1c"]["Thickness"] = 2;
+G2L["1c"]["Name"] = [[Stroke]];
+
 
 G2L["1d"] = Instance.new("LocalScript", G2L["1a"]);
 
@@ -369,7 +375,10 @@ G2L["25"] = Instance.new("UIStroke", G2L["2"]);
 G2L["25"]["Thickness"] = 2;
 G2L["25"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["25"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["25"]["LineJoinMode"] = Enum.LineJoinMode.Round;-----------------------------------------------------------------------------------------------------------------------------------------------
 G2L["25"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;
+G2L["25"]["Thickness"] = 2;
+G2L["25"]["Name"] = [[Stroke]];
 
 local function C_7()
 local script = G2L["7"];

@@ -369,6 +369,7 @@ G2L["25"] = Instance.new("UIStroke", G2L["2"]);
 G2L["25"]["Thickness"] = 2;
 G2L["25"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["25"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
+G2L["25"]["StrokeSizingMode"] = Enum.StrokeSizingMode.FixedSize;
 
 local function C_7()
 local script = G2L["7"];

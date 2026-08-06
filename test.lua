@@ -15,6 +15,7 @@ task.spawn(function()
 	end)
 end)
 
+
 local G2L = {};
 
 G2L["1"] = Instance.new("ScreenGui", game:GetService("CoreGui"));
@@ -26,15 +27,6 @@ clickSound.Name = "UIClickSound"
 clickSound.SoundId = "rbxassetid://93927627634818"
 clickSound.Volume = 0.5
 
-G2L["2_Shadow"] = Instance.new("UIShadow", G2L["2"]);
-G2L["2_Shadow"]["Name"] = "UIShadow";
-G2L["2_Shadow"]["BlurRadius"] = UDim.new(0.05, 0);
-G2L["2_Shadow"]["Color"] = Color3.fromRGB(0, 0, 0);
-G2L["2_Shadow"]["Offset"] = UDim2.new(0, 0, 0, 0);
-G2L["2_Shadow"]["Spread"] = UDim2.new(0, 0, 0, 0);
-G2L["2_Shadow"]["Transparency"] = 0.6;
-G2L["2_Shadow"]["ZIndex"] = 0;
-
 G2L["2"] = Instance.new("Frame", G2L["1"]);
 G2L["2"]["Active"] = true;
 G2L["2"]["BackgroundColor3"] = Color3.fromRGB(35, 39, 48);
@@ -44,6 +36,15 @@ G2L["2"]["Size"] = UDim2.new(0, 230, 0, 228);
 G2L["2"]["Position"] = UDim2.new(0.03, -12, 0, 6);
 G2L["2"]["BorderColor3"] = Color3.fromRGB(35, 39, 48);
 G2L["2"]["Name"] = [[MainFrame]];
+
+G2L["2_Shadow"] = Instance.new("UIShadow", G2L["2"]);
+G2L["2_Shadow"]["Name"] = "UIShadow";
+G2L["2_Shadow"]["BlurRadius"] = UDim.new(0.05, 0);
+G2L["2_Shadow"]["Color"] = Color3.fromRGB(0, 0, 0);
+G2L["2_Shadow"]["Offset"] = UDim2.new(0, 0, 0, 0);
+G2L["2_Shadow"]["Spread"] = UDim2.new(0, 0, 0, 0);
+G2L["2_Shadow"]["Transparency"] = 0.6;
+G2L["2_Shadow"]["ZIndex"] = 0;
 
 G2L["3"] = Instance.new("Frame", G2L["2"]);
 G2L["3"]["ZIndex"] = 2;
@@ -247,7 +248,7 @@ G2L["17"]["Color"] = Color3.fromRGB(172, 177, 189);
 G2L["17"]["ApplyStrokeMode"] = Enum.ApplyStrokeMode.Border;
 
 G2L["18"] = Instance.new("Frame", G2L["3"]);
-G2L["18"]["ZIndex"] = 3;
+G2L["18"]["ZIndex"] = 4;
 G2L["18"]["BorderSizePixel"] = 0;
 G2L["18"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255);
 G2L["18"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
@@ -396,7 +397,7 @@ G2L["27"]["AnchorPoint"] = Vector2.new(0.5, 0);
 G2L["27"]["Size"] = UDim2.new(1, 0, 0, 40);
 G2L["27"]["Text"] = [[+1 Backflip Keyboard Escape]];
 G2L["27"]["Name"] = [[GameName]];
-G2L["27"]["Position"] = UDim2.new(0.5, 0, 0.01, 0);
+G2L["27"]["Position"] = UDim2.new(0.5, 0, 0, 0);
 
 G2L["28"] = Instance.new("TextButton", G2L["2"]);
 G2L["28"]["SizeConstraint"] = Enum.SizeConstraint.RelativeYY;
